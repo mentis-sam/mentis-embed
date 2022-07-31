@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "system_error": "cpp",
+        "typeinfo": "cpp",
+        "sstream": "cpp",
+        "algorithm": "cpp"
+    }
+}
