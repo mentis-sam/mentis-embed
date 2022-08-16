@@ -37,6 +37,11 @@ void TftInfoScreen::render(void)
 
 }
 
+void TftInfoScreen::nextFrame(void)
+{
+   
+}
+
 void TftInfoScreen::onClick(void)
 {
     parent->render();

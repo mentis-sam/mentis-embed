@@ -58,6 +58,11 @@ void TftSetupScreen::render(void)
 
 }
 
+void TftSetupScreen::nextFrame(void)
+{
+
+}
+
 void TftSetupScreen::onClick(void)
 {
     if (highlightedBtn == 0)

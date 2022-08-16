@@ -27,6 +27,7 @@ public:
     int highlightedItem;
     int nChoices;
     int window;
+    int frame;
 
     TftMenuScreen(char *title, TftScreen *parent);
     void addItem(const char *name, TftScreen *next);
@@ -34,8 +35,10 @@ public:
     // void setChoices(TftMenuItem **choices, int len);
     void rerender(void);
     void render(void);
+    void nextFrame(void);
     void onClick(void);
     void onRotation(void);
+    
 };
 
 

@@ -30,6 +30,10 @@ void TftTemperatureScreen::render(void)
     rerender();
 }
 
+void TftTemperatureScreen::nextFrame(void)
+{
+}
+
 void TftTemperatureScreen::onClick(void)
 {
     parent->render();

@@ -6,6 +6,7 @@
 // GND    ...  GND
 #include <Arduino.h>
 #include <TFT_eSPI.h>
+#include <TJpg_Decoder.h>
 #include <SPI.h>
 
 #include "TftScreen.h"
@@ -24,7 +25,9 @@
 
 volatile int rotationFlag = 0;
 volatile int switchFlag = 0;
-volatile int timerFlag = 0;
+volatile int lastTime = 0;
+
+u_long lastIsrAt = 0;
 
 volatile int8_t g_rotValue = 0;
 
@@ -46,6 +49,8 @@ TftTemperatureScreen tempScreen("temp", (TftScreen *)&mainMenu);
 TftScreen *currentScreen;
 
 hw_timer_t * timer = NULL;
+
+
 
 
 void IRAM_ATTR rotaryEncorderISR() 
@@ -110,10 +115,11 @@ void initializeScreens(void)
 }
 
 void IRAM_ATTR timerISR() {
-  portENTER_CRITICAL_ISR(&timerMux);
-  timerFlag = 1;
-  portEXIT_CRITICAL_ISR(&timerMux);
- 
+  	portENTER_CRITICAL_ISR(&timerMux);
+	lastIsrAt = millis();
+	//timerFlag = 1;
+  	portEXIT_CRITICAL_ISR(&timerMux);
+	//currentScreen->nextFrame();		
 }
 
 void setup(){
@@ -133,10 +139,10 @@ void setup(){
 
 		initializeScreens();
 		
-		timer = timerBegin(0, 80, true);
-		timerAttachInterrupt(timer, &timerISR, true);
-		timerAlarmWrite(timer, 1000000, true);
-		timerAlarmEnable(timer);
+		//timer = timerBegin(0, 240, true);
+		//timerAttachInterrupt(timer, &timerISR, true);
+		//timerAlarmWrite(timer, 2000000, true);
+		//timerAlarmEnable(timer);
 
 }
 
@@ -151,17 +157,17 @@ void loop(){
 		rotationFlag = 0;
 		currentScreen->onRotation();
 	}
-	if (timerFlag)
+	if (millis() > lastTime + 1000)
 	{
-		portENTER_CRITICAL(&timerMux);
-		timerFlag = 0;
-		portEXIT_CRITICAL(&timerMux);
-		
+		lastTime = millis();
+
+		Serial.println(millis());
+		currentScreen->nextFrame();		
+		/*
 		tempScreen.temperature = random(200, 250) / 10.0;
 
 		if (IS_CURRENT_SCREEN(tempScreen))
 			tempScreen.rerender();
-			//Serial.println("TIMER");
-		
+		*/
 	}
 }

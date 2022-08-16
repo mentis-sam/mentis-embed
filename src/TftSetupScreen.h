@@ -20,6 +20,7 @@ public:
 
     void render(void);  
     void rerender(void);
+    void nextFrame(void);
     void onClick(void);
     void onRotation(void);
 };
