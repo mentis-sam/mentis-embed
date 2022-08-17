@@ -10,9 +10,8 @@
 class TftScreen {
 public:
     char title[255];
-    TftScreen *parent;
 
-    TftScreen(char *title, TftScreen *parent);
+    TftScreen();
     virtual void render(void) = 0;
     virtual void rerender(void) = 0;
     virtual void nextFrame(void) = 0;

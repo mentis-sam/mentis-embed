@@ -16,7 +16,7 @@ public:
     TftScreen *info;
     int highlightedBtn;
 
-    TftSetupScreen(char *title, char *text, TftScreen *parent);
+    TftSetupScreen(char *title, char *text);
 
     void render(void);  
     void rerender(void);

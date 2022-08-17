@@ -1,13 +1,13 @@
 #include "TftInfoScreen.h"
 #include "Free_Fonts.h"
 #include <PNGdec.h>
-#include "screen_utils.h"
+#include "utils\screen_utils.h"
 // #include "qrcode1.h"
 
 PNG png; // PNG decoder inatance
 
-TftInfoScreen::TftInfoScreen(char *title, const unsigned char *qrcode, size_t qrcodeLen, TftScreen *parent)
-: TftScreen(title, parent), qrcode(qrcode), qrcodeLen(qrcodeLen)
+TftInfoScreen::TftInfoScreen(char *title)
+: TftScreen()
 {
 }
 
@@ -44,13 +44,6 @@ void TftInfoScreen::nextFrame(void)
 
 void TftInfoScreen::onClick(void)
 {
-    parent->render();
-    // if (highlightedBtn == 0)
-    //     cancel->render();
-    // else if (highlightedBtn == 1)
-    //     ok->render();
-    // else
-    //     info->render();
 }
 
 void TftInfoScreen::onRotation(void)

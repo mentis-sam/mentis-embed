@@ -1,5 +1,5 @@
-#ifndef TFTTEMPERATURESCREEN
-#define TFTTEMPERATURESCREEN
+#ifndef TFTINFOSCREEN
+#define TFTINFOSCREEN
 
 #include <TFT_eSPI.h>
 #include "TftScreen.h"
@@ -8,17 +8,18 @@ extern TFT_eSPI tft;
 extern TftScreen *currentScreen;
 extern volatile int8_t g_rotValue;
 
-class TftTemperatureScreen: TftScreen {
+class TftInfoScreen: TftScreen {
 public:
-    float temperature;
+    const unsigned char *qrcode;
+    size_t qrcodeLen;
 
-    TftTemperatureScreen(char *title, TftScreen *parent);
+    TftInfoScreen(char *title);
 
     void render(void);  
     void rerender(void);
-    void nextFrame(void); 
+    void nextFrame(void);
     void onClick(void);
     void onRotation(void);
 };
 
-#endif /* TFTTEMPERATURESCREEN */
+#endif /* TFTINFOSCREEN */

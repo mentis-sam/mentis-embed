@@ -1,6 +1,6 @@
 #include "TftSetupScreen.h"
 #include "Free_Fonts.h"
-#include "screen_utils.h"
+#include "utils\screen_utils.h"
 
 #define DISPLAY_WIDTH 20
 
@@ -34,8 +34,8 @@ void drawStringWrapOnWords(char* string, int x, int y)
 
 
 
-TftSetupScreen::TftSetupScreen(char *title, char *text, TftScreen *parent)
-: TftScreen(title, parent), highlightedBtn(-1)
+TftSetupScreen::TftSetupScreen(char *title, char *text)
+: TftScreen()
 {
     strcpy(this->text, text);
 }

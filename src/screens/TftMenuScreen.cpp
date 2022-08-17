@@ -1,8 +1,6 @@
 #include "TftMenuScreen.h"
 #include "Free_Fonts.h"
-#include "screen_utils.h"
 
-#include "screens\dehydrate.h"
 
 #include <TJpg_Decoder.h>
 
@@ -21,31 +19,27 @@ bool tft_output(int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t* bitmap)
   return 1;
 }
 
+/*
 void TftMenuScreen::addItem(const char *name, TftScreen *next)
 {
     strcpy(choices[nChoices].name, name);
     choices[nChoices].next = next;
     nChoices++;
 }
+*/
 
-
-TftMenuScreen::TftMenuScreen(char *title, TftScreen *parent)
-: TftScreen(title, parent), highlightedItem(-1), nChoices(0)
+TftMenuScreen::TftMenuScreen(NavScreen screen, NavScreen navLeft, NavScreen navRight, NavScreen navSelect)
+: TftScreen(), menuPage(screen)
 {
     // The byte order can be swapped (set true for TFT_eSPI)
     TJpgDec.setSwapBytes(true);
 
     // The jpeg decoder must be given the exact name of the rendering function above
     TJpgDec.setCallback(tft_output);
-
-    
 }
 
 void TftMenuScreen::render(void)
 {
-    window = 0;
-    highlightedItem = 0;
-    currentScreen = this;
     g_rotValue = 0;
     frame = 0;
     
@@ -56,6 +50,21 @@ void TftMenuScreen::render(void)
 
 void TftMenuScreen::rerender(void)
 {
+    switch (menuPage) {
+        case NavScreen::Colonise:
+            TJpgDec.drawJpg(0, 0, colonise0, sizeof(colonise0));
+            break;
+        case NavScreen::Mycelium:
+            TJpgDec.drawJpg(0, 0, mycelium0, sizeof(mycelium0));
+            break;
+        case NavScreen::Dehydrate:
+            TJpgDec.drawJpg(0, 0, dehydrate0, sizeof(dehydrate0));
+            break;
+        case NavScreen::Settings:
+            TJpgDec.drawJpg(0, 0, settings0, sizeof(settings0));
+            break;
+    }
+    /*
     switch (frame) {
         case 0:
             TJpgDec.drawJpg(0, 0, dehydrate0, sizeof(dehydrate0));
@@ -82,6 +91,7 @@ void TftMenuScreen::rerender(void)
         case 11:
             TJpgDec.drawJpg(0, 0, dehydrate11, sizeof(dehydrate11));
     }
+    */
     /*
     int a, b;
     if (!(highlightedItem >= window && highlightedItem < window + WINDOW_SIZE)) // if the highlighted item is NOT in the current window
@@ -123,27 +133,27 @@ void TftMenuScreen::nextFrame(void)
     if (frame == 13){
         frame = 0;
     }
-    rerender();
+    //rerender();
 }
 
 void TftMenuScreen::onRotation(void)
 {
     int toHighlight;
-    if (g_rotValue < 0)
-        g_rotValue += nChoices;
+    Serial.println(g_rotValue);
+    //if (g_rotValue < 0)
+        //g_rotValue += nChoices;
 
-    toHighlight = g_rotValue % nChoices;
-    if (toHighlight > nChoices)
-        toHighlight = 0;
-    if (toHighlight == highlightedItem)
-        return;
-    highlightedItem = toHighlight;
-    Serial.printf("highlighted %d\n", highlightedItem);
-    rerender();
+    //toHighlight = g_rotValue % nChoices;
+    //if (toHighlight > nChoices)
+    //    toHighlight = 0;
+    //if (toHighlight == highlightedItem)
+    //    return;
+    //highlightedItem = toHighlight;
+    //Serial.printf("highlighted %d\n", highlightedItem);
+    //rerender();
 }
 
 void TftMenuScreen::onClick(void)
 {
-    if (choices[highlightedItem].next)
-        choices[highlightedItem].next->render();
+
 }

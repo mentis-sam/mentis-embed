@@ -1,9 +1,9 @@
 #include "TftTemperatureScreen.h"
 #include "Free_Fonts.h"
-#include "screen_utils.h"
+#include "utils\screen_utils.h"
 
-TftTemperatureScreen::TftTemperatureScreen(char *title, TftScreen *parent)
-: TftScreen(title, parent), temperature(0)
+TftTemperatureScreen::TftTemperatureScreen(char *title)
+: TftScreen()
 {
 }
 
@@ -36,7 +36,6 @@ void TftTemperatureScreen::nextFrame(void)
 
 void TftTemperatureScreen::onClick(void)
 {
-    parent->render();
 }
 
 void TftTemperatureScreen::onRotation(void)

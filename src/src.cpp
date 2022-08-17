@@ -9,11 +9,13 @@
 #include <TJpg_Decoder.h>
 #include <SPI.h>
 
-#include "TftScreen.h"
-#include "TftMenuScreen.h"
-#include "TftSetupScreen.h"
-#include "TftInfoScreen.h"
-#include "TftTemperatureScreen.h"
+#include "screens\TftScreen.h"
+#include "screens\TftMenuScreen.h"
+#include "screens\TftSetupScreen.h"
+#include "screens\TftInfoScreen.h"
+#include "screens\TftTemperatureScreen.h"
+
+#include "utils\NavManager.h"
 
 #include "qrcode1.h"
 
@@ -21,7 +23,7 @@
 #define ROTARY_PINB 27 //4 CLK
 #define ROTARY_PINSW 25
 
-#define IS_CURRENT_SCREEN(screen) currentScreen == (TftScreen *)&screen
+//#define IS_CURRENT_SCREEN(screen) currentScreen == (TftScreen *)&screen
 
 volatile int rotationFlag = 0;
 volatile int switchFlag = 0;
@@ -36,22 +38,7 @@ TFT_eSPI tft = TFT_eSPI();
 portMUX_TYPE gpioMux = portMUX_INITIALIZER_UNLOCKED;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 
-TftMenuScreen mainMenu("Main", NULL);
-
-TftSetupScreen firstSetupScreen("first info screen", "1. Wipe injection port && inoculate substrate", NULL);
-TftSetupScreen secondSetupScreen("second info screen", "2. Confirm inoculation done", NULL);
-
-TftInfoScreen firstInfoScreen("first info screen", qrcode1, sizeof(qrcode1), (TftScreen *)&firstSetupScreen);
-TftInfoScreen secondInfoScreen("second info screen", qrcode1, sizeof(qrcode1), (TftScreen *)&secondSetupScreen);
-
-TftTemperatureScreen tempScreen("temp", (TftScreen *)&mainMenu);
-
-TftScreen *currentScreen;
-
 hw_timer_t * timer = NULL;
-
-
-
 
 void IRAM_ATTR rotaryEncorderISR() 
 {
@@ -98,20 +85,8 @@ void IRAM_ATTR rotarySwitchISR() {
 
 void initializeScreens(void)
 {
-	mainMenu.addItem("Begin Grow", (TftScreen *)&firstSetupScreen);
-	mainMenu.addItem("Skip to phase", (TftScreen *)&firstSetupScreen);
-	mainMenu.addItem("Temperature", (TftScreen *)&tempScreen);
-	mainMenu.addItem("Settings", (TftScreen *)&mainMenu);
-
-	firstSetupScreen.cancel = (TftScreen *)&mainMenu;
-	firstSetupScreen.ok = (TftScreen *)&secondSetupScreen;
-	firstSetupScreen.info = (TftScreen *)&firstInfoScreen;
-
-	secondSetupScreen.cancel = (TftScreen *)&firstSetupScreen;
-	secondSetupScreen.ok = (TftScreen *)&mainMenu;
-	secondSetupScreen.info = (TftScreen *)&secondInfoScreen;
-
-	mainMenu.render();
+	gotoScreen(NavScreen::Colonise);
+	currentScreen->render();
 }
 
 void IRAM_ATTR timerISR() {
@@ -162,7 +137,7 @@ void loop(){
 		lastTime = millis();
 
 		Serial.println(millis());
-		currentScreen->nextFrame();		
+		currentScreen->nextFrame();	
 		/*
 		tempScreen.temperature = random(200, 250) / 10.0;
 
