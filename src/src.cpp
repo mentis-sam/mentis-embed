@@ -85,8 +85,8 @@ void IRAM_ATTR rotarySwitchISR() {
 
 void initializeScreens(void)
 {
-	gotoScreen(NavScreen::Colonise);
-	currentScreen->render();
+	Nav::gotoScreen(NavScreen::Colonise);
+	Nav::currentScreen->render();
 }
 
 void IRAM_ATTR timerISR() {
@@ -125,19 +125,18 @@ void loop(){
 	if (switchFlag)
 	{
 		switchFlag = 0;
-		currentScreen->onClick();
+		Nav::currentScreen->onClick();
 	}
 	if (rotationFlag)
 	{
 		rotationFlag = 0;
-		currentScreen->onRotation();
+		Nav::currentScreen->onRotation();
 	}
 	if (millis() > lastTime + 1000)
 	{
 		lastTime = millis();
+		Nav::currentScreen->nextFrame();
 
-		Serial.println(millis());
-		currentScreen->nextFrame();	
 		/*
 		tempScreen.temperature = random(200, 250) / 10.0;
 

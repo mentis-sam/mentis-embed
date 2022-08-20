@@ -8,10 +8,14 @@
 
 #include "NavScreens.h"
 
+namespace Nav {
+
 extern TftScreen* currentScreen;// = new TftMenuScreen(NavScreen::Colonise, NavScreen::Settings, NavScreen::Mycelium, NavScreen::Dehydrate);
 extern NavScreen  currentScreenName;// = NavScreen::Colonise;
 
-void gotoScreen(NavScreen screen);  
+void gotoScreen(NavScreen screen); 
+ 
+}
 
 
 #endif /* NAV_MANAGER */

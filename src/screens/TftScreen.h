@@ -9,7 +9,6 @@
 
 class TftScreen {
 public:
-    char title[255];
 
     TftScreen();
     virtual void render(void) = 0;

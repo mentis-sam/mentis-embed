@@ -1,5 +1,7 @@
 #include "NavManager.h"
 
+namespace Nav {
+
 TftScreen* currentScreen = new TftMenuScreen(NavScreen::Colonise, NavScreen::Settings, NavScreen::Mycelium, NavScreen::Dehydrate);
 NavScreen currentScreenName = NavScreen::Colonise;
 
@@ -27,4 +29,6 @@ void gotoScreen(NavScreen screen) {
     }
 
    currentScreen->render();
+}
+
 }

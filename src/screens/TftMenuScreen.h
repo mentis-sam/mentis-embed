@@ -5,6 +5,7 @@
 #include "TftScreen.h"
 
 #include "utils\NavScreens.h"
+#include "utils\NavManager.h"
 #include "utils\screen_utils.h"
 
 #include "screen_files\colonise.h"
@@ -17,8 +18,12 @@ extern volatile int8_t g_rotValue;
 
 class TftMenuScreen: public TftScreen {
 public: 
-    NavScreen menuPage;
-    int window;
+    NavScreen menuScreen;
+
+    NavScreen navLeft;
+    NavScreen navRight;
+    NavScreen navSelect;
+
     int frame;
 
     TftMenuScreen(NavScreen screen, NavScreen navLeft, NavScreen navRight, NavScreen navSelect);
