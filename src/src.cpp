@@ -132,7 +132,7 @@ void loop(){
 		rotationFlag = 0;
 		Nav::currentScreen->onRotation();
 	}
-	if (millis() > lastTime + 100)
+	if (millis() > lastTime + 1000)
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();

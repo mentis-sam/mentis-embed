@@ -1,11 +1,12 @@
 #include "TftInfoScreen.h"
 #include "Free_Fonts.h"
-#include <PNGdec.h>
+//#include <PNGdec.h>
 #include "utils\screen_utils.h"
 // #include "qrcode1.h"
 
-PNG png; // PNG decoder inatance
+//PNG png; // PNG decoder inatance
 
+/*
 TftInfoScreen::TftInfoScreen(char *title)
 : TftScreen()
 {
@@ -67,3 +68,5 @@ void TftInfoScreen::rerender(void)
     // tft.fillRect(212, 170, 106, 70, highlightedBtn == 2 ? TFT_WHITE : TFT_BLACK);
     // tft.drawCentreString("Info", 265 ,195, 4);
 }
+
+*/
