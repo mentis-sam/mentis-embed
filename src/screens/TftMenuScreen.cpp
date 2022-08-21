@@ -28,7 +28,7 @@ void TftMenuScreen::addItem(const char *name, TftScreen *next)
 }
 */
 
-TftMenuScreen::TftMenuScreen(NavScreen screen, NavScreen navLeft, NavScreen navRight, NavScreen navSelect)
+TftMenuScreen::TftMenuScreen(NavScreen screen, const uint8_t* frame_data[12], const uint32_t frame_len[12], NavScreen navLeft, NavScreen navRight, NavScreen navSelect)
 : TftScreen(), menuScreen(screen), navLeft(navLeft), navRight(navRight), navSelect(navSelect)
 {
     // The byte order can be swapped (set true for TFT_eSPI)
@@ -37,6 +37,10 @@ TftMenuScreen::TftMenuScreen(NavScreen screen, NavScreen navLeft, NavScreen navR
     // The jpeg decoder must be given the exact name of the rendering function above
     TJpgDec.setCallback(tft_output);
 
+    //frame1 = screens[0];
+
+    frame_d = frame_data;
+    frame_l = frame_len;
 }
 
 void TftMenuScreen::render(void)
@@ -50,6 +54,9 @@ void TftMenuScreen::render(void)
 
 void TftMenuScreen::rerender(void)
 {
+    TJpgDec.drawJpg(0, 0, frame_d[frame], frame_l[frame]);
+    //Serial.printf("Size data: %d, Size uint8_t: %d", sizeof(*frame_d[0]), sizeof(uint8_t));
+    /*
     switch (menuScreen) {
         case NavScreen::Colonise:
             TJpgDec.drawJpg(0, 0, colonise0, sizeof(colonise0));
@@ -64,16 +71,16 @@ void TftMenuScreen::rerender(void)
             TJpgDec.drawJpg(0, 0, settings0, sizeof(settings0));
             break;
     }
-    
+    */
 }
 
 void TftMenuScreen::nextFrame(void)
 {
     frame += 1;
-    if (frame == 13){
+    if (frame == 12){
         frame = 0;
     }
-    //rerender();
+    rerender();
 }
 
 void TftMenuScreen::onRotation(void)

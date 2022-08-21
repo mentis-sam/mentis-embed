@@ -1,3 +1,6 @@
+#ifndef DEHYDRATE_H
+#define DEHYDRATE_H
+
 #include <pgmspace.h>
 #include <stdint.h>
 
@@ -6568,3 +6571,8 @@ const uint8_t dehydrate11[] PROGMEM = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0xFF, 0xD9
 };
 
+
+extern const uint8_t* dehydrate[12]; 
+extern const uint32_t dehydrate_l[12];
+
+#endif
