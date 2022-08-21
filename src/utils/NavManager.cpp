@@ -2,7 +2,7 @@
 
 namespace Nav {
 
-TftScreen* currentScreen = new TftMenuScreen(NavScreen::Colonise, dehydrate, dehydrate_l, NavScreen::Settings, NavScreen::Mycelium, NavScreen::Dehydrate);
+TftScreen* currentScreen = new TftMenuScreen(NavScreen::Colonise, menu_dehydrate, menu_dehydrate_l, NavScreen::Settings, NavScreen::Mycelium, NavScreen::Dehydrate);
 NavScreen currentScreenName = NavScreen::Colonise;
 
 //TftMenuScreen menuColoniseScreen    = TftMenuScreen(NavScreen::Colonise, dehydrate, NavScreen::Settings, NavScreen::Mycelium, NavScreen::Dehydrate);

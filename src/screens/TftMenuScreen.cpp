@@ -84,7 +84,7 @@ void TftMenuScreen::rerender(void)
     int16_t rc = png.openFLASH((uint8_t*)&frame_d[offset], frame_l[frame], pngDraw);
     if (rc == PNG_SUCCESS) {
         //tft.startWrite();
-        Serial.printf("image specs: (%d x %d), %d bpp, pixel type: %d\n", png.getWidth(), png.getHeight(), png.getBpp(), png.getPixelType());
+        //Serial.printf("image specs: (%d x %d), %d bpp, pixel type: %d\n", png.getWidth(), png.getHeight(), png.getBpp(), png.getPixelType());
         rc = png.decode(NULL, 0);
         png.close();
         //tft.endWrite();

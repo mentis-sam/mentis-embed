@@ -29,15 +29,20 @@ def create_header(name, filenames):
     sdata_l = ','.join(map(str, data_l)) 
 
     header_template = \
-"""#include <pgmspace.h>
+"""#ifndef %NAME_C%_H
+#define %NAME_C%_H
+
+#include <pgmspace.h>
 #include <stdint.h>
 
 const uint8_t %NAME%[] PROGMEM = 
 {%DATA%}; 
     
 const uint32_t %NAME%_l[%RAMES%] PROGMEM = {%DATA_L%}; 
-"""
 
+#endif
+"""
+    header_template = header_template.replace("%NAME_C%", name.upper())
     header_template = header_template.replace("%NAME%", name)
     header_template = header_template.replace("%RAMES%", str(len(filenames)))
     header_template = header_template.replace("%DATA_L%", sdata_l)
@@ -50,4 +55,4 @@ const uint32_t %NAME%_l[%RAMES%] PROGMEM = {%DATA_L%};
 #create_header("colonise", filenames)
 
 filenames = [f'img\\UI Screens (2)\\Menu\\Dehydrate\\Dehydrate {n}.png' for n in range(1,13)]
-create_header("dehydrate", filenames)
+create_header("menu_dehydrate", filenames)
