@@ -1,8 +1,6 @@
 import binascii
 from dataclasses import dataclass
 
-filename = 'img\\UI Screens (2)\\Menu\\From scratch\\From scratch 1.jpg'
-
 def convert_file(filename):
     with open(filename, 'rb') as f:
         content = f.read()
@@ -51,8 +49,53 @@ const uint32_t %NAME%_l[%RAMES%] PROGMEM = {%DATA_L%};
     with open(f"tools\\frame_encoder\\output\\{name}.h", "w") as text_file:
         text_file.write(header_template)
     
-#filenames = [f'img\\UI Screens (2)\\Menu\\From scratch\\From scratch {n}.png' for n in range(1,13)]
-#create_header("colonise", filenames)
 
-filenames = [f'img\\UI Screens (2)\\Menu\\Dehydrate\\Dehydrate {n}.png' for n in range(1,13)]
+def complete_folder(name, folder, sub_folders, sub_file_num):
+    for index, sub_fo in enumerate(sub_folders):
+            filenames = [f'img\\{folder}\\{sub_fo}\\{sub_fo} {n}.png' for n in range(1,sub_file_num[index]+1)]
+            create_header(f"{name.lower()}_{sub_fo.lower()}", filenames)
+
+def complete_simple_folder(name, folder, filename, sub_file_num):
+    filenames = [f'img\\{folder}\\{filename} {n}.png' for n in range(1,sub_file_num+1)]
+    create_header(f"{name}", filenames)
+
+complete_folder("colonise", "From scratch", ["Close", "Colonising", "Inject", "Insert", "Wipe"], [12] * 5)
+
+complete_simple_folder("fruiting", "Fruiting", "Fruiting", 5)
+
+complete_simple_folder("grow_ready", "Grow\\Ready", "Ready", 12)
+
+# HELP
+
+# MENU
+
+complete_folder("mycelium", "Mycelium", ["Close", "Fruiting", "Insert"], [12] * 3)
+
+complete_folder("settings", "Settings", ["Airflow", "Beep", "Colonisation", "Fruiting", "Light", "Temperature", "Time Period"], [10, 4, 5, 4, 10, 11, 50])
+
+
+#complete_simple_folder("grow_ready", "Grow\\Ready", "Ready", 12)
+
+#filenames = [f'img\\Menu\\Fruiting\\Fruiting {n}.png' for n in range(1,6)]
+#create_header("menu_dehydrate", filenames)
+
+#complete_folder("mycelium", "Fruiting", ["Close", "Colonising", "Inject", "Insert", "Wipe"], [12] * 5)
+
+
+"""
+sub_folders = ["Close", "Colonising", "Inject", "Inset", "Wipe"]
+filenames = [f'img\\Menu\\Dehydrate\\Dehydrate {n}.png' for n in range(1,13)]
 create_header("menu_dehydrate", filenames)
+
+filenames = [f'img\\Menu\\From scratch\\From scratch {n}.png' for n in range(1,13)]
+create_header("menu_colonise", filenames)
+
+filenames = [f'img\\Menu\\Mycelium\\Mycelium {n}.png' for n in range(1,13)]
+create_header("menu_mycelium", filenames)
+
+filenames = [f'img\\Menu\\Settings\\Settings {n}.png' for n in range(1,13)]
+create_header("menu_settings", filenames)
+
+filenames = [f'img\\Menu\\Settings\\Settings {n}.png' for n in range(1,13)]
+create_header("menu_settings", filenames)
+"""

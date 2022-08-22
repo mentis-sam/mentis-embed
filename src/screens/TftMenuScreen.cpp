@@ -50,8 +50,8 @@ void TftMenuScreen::addItem(const char *name, TftScreen *next)
 }
 */
 
-TftMenuScreen::TftMenuScreen(NavScreen screen, const uint8_t* frame_data, const uint32_t frame_len[12], NavScreen navLeft, NavScreen navRight, NavScreen navSelect)
-: TftScreen(), menuScreen(screen), navLeft(navLeft), navRight(navRight), navSelect(navSelect)
+TftMenuScreen::TftMenuScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames, NavScreen navLeft, NavScreen navRight, NavScreen navSelect)
+: TftScreen(), frames(frames), navLeft(navLeft), navRight(navRight), navSelect(navSelect)
 {
     // The byte order can be swapped (set true for TFT_eSPI)
     TJpgDec.setSwapBytes(true);
@@ -113,7 +113,7 @@ void TftMenuScreen::rerender(void)
 void TftMenuScreen::nextFrame(void)
 {
     frame += 1;
-    if (frame == 12){
+    if (frame == frames){
         frame = 0;
     }
     rerender();
