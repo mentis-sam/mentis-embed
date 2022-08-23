@@ -6,18 +6,9 @@
 // GND    ...  GND
 #include <Arduino.h>
 #include <TFT_eSPI.h>
-#include <TJpg_Decoder.h>
 #include <SPI.h>
 
-#include "screens\TftScreen.h"
-#include "screens\TftMenuScreen.h"
-#include "screens\TftSetupScreen.h"
-#include "screens\TftInfoScreen.h"
-#include "screens\TftTemperatureScreen.h"
-
 #include "utils\NavManager.h"
-
-#include "qrcode1.h"
 
 #define ROTARY_PINA 26 //2 DT
 #define ROTARY_PINB 27 //4 CLK
@@ -73,7 +64,7 @@ void IRAM_ATTR rotarySwitchISR() {
 	static long lastSwicthTrigger = 0;
 	long t = millis();
 
-	if (t - lastSwicthTrigger < 300)
+	if (t - lastSwicthTrigger < 150)
 		return;
 	lastSwicthTrigger = t;
 
@@ -132,7 +123,7 @@ void loop(){
 		rotationFlag = 0;
 		Nav::currentScreen->onRotation();
 	}
-	if (millis() > lastTime + 200)
+	if (millis() > lastTime + 150)
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();

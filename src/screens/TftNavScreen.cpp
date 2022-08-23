@@ -1,9 +1,4 @@
-#include "TftMenuScreen.h"
-#include "Free_Fonts.h"
-
-
-#include <TJpg_Decoder.h>
-#include <PNGdec.h>
+#include "TftNavScreen.h"
 
 PNG png; // PNG decoder inatance
 
@@ -50,14 +45,14 @@ void TftMenuScreen::addItem(const char *name, TftScreen *next)
 }
 */
 
-TftMenuScreen::TftMenuScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames, TftScreen* navLeft, TftScreen* navRight, TftScreen* navSelect)
+TftNavScreen::TftNavScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames, TftScreen* navLeft, TftScreen* navRight, TftScreen* navSelect)
 : TftScreen(), frames(frames), navLeft(navLeft), navRight(navRight), navSelect(navSelect)
 {
     // The byte order can be swapped (set true for TFT_eSPI)
-    TJpgDec.setSwapBytes(true);
+    //TJpgDec.setSwapBytes(true);
 
     // The jpeg decoder must be given the exact name of the rendering function above
-    TJpgDec.setCallback(tft_output);
+    //TJpgDec.setCallback(tft_output);
 
     //frame1 = screens[0];
 
@@ -65,7 +60,7 @@ TftMenuScreen::TftMenuScreen(const uint8_t* frame_data, const uint32_t* frame_le
     frame_l = frame_len;
 }
 
-void TftMenuScreen::render(void)
+void TftNavScreen::render(void)
 {
     frame = 0;
     g_rotValue = 0;
@@ -74,7 +69,7 @@ void TftMenuScreen::render(void)
     rerender();
 }
 
-void TftMenuScreen::rerender(void)
+void TftNavScreen::rerender(void)
 {
     int offset = 0;
     for (int i = 0; i < frame; i++){
@@ -110,7 +105,7 @@ void TftMenuScreen::rerender(void)
     */
 }
 
-void TftMenuScreen::nextFrame(void)
+void TftNavScreen::nextFrame(void)
 {
     frame += 1;
     if (frame == frames){
@@ -119,7 +114,7 @@ void TftMenuScreen::nextFrame(void)
     rerender();
 }
 
-void TftMenuScreen::onRotation(void)
+void TftNavScreen::onRotation(void)
 {
     if (g_rotValue < 0){
         Nav::gotoScreen(navLeft);
@@ -128,7 +123,7 @@ void TftMenuScreen::onRotation(void)
     }
 }
 
-void TftMenuScreen::onClick(void)
+void TftNavScreen::onClick(void)
 {
     Nav::gotoScreen(navSelect);
 }

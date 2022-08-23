@@ -59,6 +59,10 @@ def complete_simple_folder(name, folder, filename, sub_file_num):
     filenames = [f'img\\{folder}\\{filename} {n}.png' for n in range(1,sub_file_num+1)]
     create_header(f"{name}_i", filenames)
 
+def complete_single(name, folder, filename):
+    filenames = [f'img\\{folder}\\{filename}.png']
+    create_header(f"{name}_i", filenames)
+
 complete_folder("colonise", "From scratch", ["Close", "Colonising", "Inject", "Insert", "Wipe"], [12] * 5)
 
 complete_simple_folder("fruiting", "Fruiting", "Fruiting", 5)
@@ -66,6 +70,11 @@ complete_simple_folder("fruiting", "Fruiting", "Fruiting", 5)
 complete_simple_folder("grow_ready", "Grow\\Ready", "Ready", 12)
 
 # HELP
+
+complete_single("help_lid", "Help", "Close lid")
+complete_single("help_inject", "Help", "Inject spores")
+complete_single("help_insert", "Help", "Insert bag into device")
+complete_single("help_wipe", "Help", "Wipe injection port")
 
 complete_folder("menu", "Menu", ["Dehydrate", "From Scratch", "Mycelium", "Settings"], [12] * 4)
 
