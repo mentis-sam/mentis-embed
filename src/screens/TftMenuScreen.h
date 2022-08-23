@@ -25,13 +25,13 @@ public:
     const uint32_t* frame_l;
     const uint8_t frames;
 
-    NavScreen navLeft;
-    NavScreen navRight;
-    NavScreen navSelect;
+    TftScreen* navLeft;
+    TftScreen* navRight;
+    TftScreen* navSelect;
 
     uint8_t frame;
 
-    TftMenuScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames,  NavScreen navLeft, NavScreen navRight, NavScreen navSelect);
+    TftMenuScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames,  TftScreen* navLeft, TftScreen* navRight, TftScreen* navSelect);
 
     // void setChoices(TftMenuItem **choices, int len);
     void rerender(void);

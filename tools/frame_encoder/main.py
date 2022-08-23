@@ -36,7 +36,7 @@ def create_header(name, filenames):
 const uint8_t %NAME%[] PROGMEM = 
 {%DATA%}; 
     
-const uint32_t %NAME%_l[%RAMES%] PROGMEM = {%DATA_L%}; 
+const uint32_t %NAME%l[%RAMES%] PROGMEM = {%DATA_L%}; 
 
 #endif
 """
@@ -46,18 +46,18 @@ const uint32_t %NAME%_l[%RAMES%] PROGMEM = {%DATA_L%};
     header_template = header_template.replace("%DATA_L%", sdata_l)
     header_template = header_template.replace("%DATA%", sdata)
 
-    with open(f"tools\\frame_encoder\\output\\{name}.h", "w") as text_file:
+    with open(f"tools\\frame_encoder\\output\\{name[:-2]}.h", "w") as text_file:
         text_file.write(header_template)
     
 
 def complete_folder(name, folder, sub_folders, sub_file_num):
     for index, sub_fo in enumerate(sub_folders):
             filenames = [f'img\\{folder}\\{sub_fo}\\{sub_fo} {n}.png' for n in range(1,sub_file_num[index]+1)]
-            create_header(f"{name.lower()}_{sub_fo.lower()}", filenames)
+            create_header(f"{name.lower()}_{sub_fo.lower()}_i", filenames)
 
 def complete_simple_folder(name, folder, filename, sub_file_num):
     filenames = [f'img\\{folder}\\{filename} {n}.png' for n in range(1,sub_file_num+1)]
-    create_header(f"{name}", filenames)
+    create_header(f"{name}_i", filenames)
 
 complete_folder("colonise", "From scratch", ["Close", "Colonising", "Inject", "Insert", "Wipe"], [12] * 5)
 
@@ -67,7 +67,7 @@ complete_simple_folder("grow_ready", "Grow\\Ready", "Ready", 12)
 
 # HELP
 
-# MENU
+complete_folder("menu", "Menu", ["Dehydrate", "From Scratch", "Mycelium", "Settings"], [12] * 4)
 
 complete_folder("mycelium", "Mycelium", ["Close", "Fruiting", "Insert"], [12] * 3)
 

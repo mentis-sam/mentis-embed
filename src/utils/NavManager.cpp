@@ -2,32 +2,15 @@
 
 namespace Nav {
 
-TftScreen* currentScreen = new TftMenuScreen(menu_colonise, menu_colonise_l, 12, NavScreen::Settings, NavScreen::Mycelium, NavScreen::Dehydrate);
-NavScreen currentScreenName = NavScreen::Colonise;
+TftScreen* currentScreen = NULL;
 
-void gotoScreen(NavScreen screen) {
-    if (screen == currentScreenName){
-        return;
-    }
+TftMenuScreen menu_colonise  = TftMenuScreen(menu_colonise_i, menu_colonise_il, 12, &Nav::menu_settings, &Nav::menu_mycelium, &Nav::menu_colonise);
+TftMenuScreen menu_mycelium  = TftMenuScreen(menu_mycelium_i, menu_mycelium_il, 12, &Nav::menu_colonise, &Nav::menu_dehydrate, &Nav::menu_colonise);
+TftMenuScreen menu_dehydrate = TftMenuScreen(menu_dehydrate_i, menu_dehydrate_il, 12, &Nav::menu_mycelium, &Nav::menu_settings, &Nav::menu_colonise);
+TftMenuScreen menu_settings  = TftMenuScreen(menu_settings_i, menu_settings_il, 12, &Nav::menu_colonise, &Nav::menu_colonise, &Nav::menu_colonise);
 
-    delete currentScreen;
-    //currentScreen = &menuColoniseScreen;
-    currentScreenName = screen;
-    
-    switch (screen) {
-        case NavScreen::Colonise:
-            currentScreen = new TftMenuScreen(menu_colonise, menu_colonise_l, 12, NavScreen::Settings, NavScreen::Mycelium, NavScreen::Dehydrate);
-            break;
-        case NavScreen::Mycelium:
-            currentScreen = new TftMenuScreen(menu_mycelium, menu_mycelium_l, 12, NavScreen::Colonise, NavScreen::Dehydrate, NavScreen::Dehydrate);
-            break;
-        case NavScreen::Dehydrate:
-            currentScreen = new TftMenuScreen(menu_dehydrate, menu_dehydrate_l, 12, NavScreen::Mycelium, NavScreen::Settings, NavScreen::Dehydrate);
-            break;
-        case NavScreen::Settings:
-            currentScreen = new TftMenuScreen(menu_settings, menu_settings_l, 12, NavScreen::Dehydrate, NavScreen::Colonise, NavScreen::Dehydrate);
-            break;
-    }
+void gotoScreen(TftScreen* screen) {
+    currentScreen = screen;
 
    currentScreen->render();
 }

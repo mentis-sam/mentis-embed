@@ -3,8 +3,8 @@
 
 #include "TFT_eSPI.h"
 
-#include "screens\TftScreen.h"
 #include "screens\TftMenuScreen.h"
+#include "screens\TftScreen.h"
 
 #include "screen_files\menu_colonise.h"
 #include "screen_files\menu_dehydrate.h"
@@ -13,12 +13,18 @@
 
 #include "NavScreens.h"
 
+class TftMenuScreen;
+
 namespace Nav {
 
 extern TftScreen* currentScreen;
-extern NavScreen  currentScreenName;// = NavScreen::Colonise;
 
-void gotoScreen(NavScreen screen); 
+extern TftMenuScreen menu_colonise;
+extern TftMenuScreen menu_mycelium;
+extern TftMenuScreen menu_dehydrate;
+extern TftMenuScreen menu_settings;
+
+void gotoScreen(TftScreen* screen); 
 
 }
 

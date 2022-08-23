@@ -85,7 +85,7 @@ void IRAM_ATTR rotarySwitchISR() {
 
 void initializeScreens(void)
 {
-	Nav::gotoScreen(NavScreen::Colonise);
+	Nav::gotoScreen(&Nav::menu_colonise);
 	Nav::currentScreen->render();
 }
 
@@ -132,7 +132,7 @@ void loop(){
 		rotationFlag = 0;
 		Nav::currentScreen->onRotation();
 	}
-	if (millis() > lastTime + 1000)
+	if (millis() > lastTime + 200)
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();
