@@ -10,11 +10,11 @@
 
 #include "utils/NavManager.h"
 
+#include "module/TempModule.h"
+
 #define ROTARY_PINA 26 //2 DT
 #define ROTARY_PINB 27 //4 CLK
 #define ROTARY_PINSW 25
-
-//#define IS_CURRENT_SCREEN(screen) currentScreen == (TftScreen *)&screen
 
 volatile int rotationFlag = 0;
 volatile int switchFlag = 0;
@@ -91,6 +91,17 @@ void IRAM_ATTR timerISR() {
 void setup(){
 		Serial.begin(115200);
 
+		
+
+		
+
+		int module_errors = 0;
+		Serial.printf("/// INITIALISING MODULES ///\n");
+
+		module_errors += TempModule::initialise(32);
+
+		initializeScreens();
+
 		pinMode(ROTARY_PINA, INPUT_PULLUP);
 		pinMode(ROTARY_PINB, INPUT_PULLUP);
 		pinMode(ROTARY_PINSW, INPUT_PULLUP);
@@ -102,9 +113,9 @@ void setup(){
 		tft.init();
 		tft.setRotation(1);
 		tft.fillScreen(TFT_BLACK);
-
-		initializeScreens();
 		
+		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
+		Serial.printf("Module Errors: %d\n", module_errors);
 		//timer = timerBegin(0, 240, true);
 		//timerAttachInterrupt(timer, &timerISR, true);
 		//timerAlarmWrite(timer, 2000000, true);
@@ -127,6 +138,9 @@ void loop(){
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();
+
+		Serial.printf("Temp: %f\n", TempModule::getTempC());
+		//Serial.println(TempModule::getTempC());
 
 		/*
 		tempScreen.temperature = random(200, 250) / 10.0;
