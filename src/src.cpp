@@ -11,6 +11,7 @@
 #include "utils/NavManager.h"
 
 #include "module/TempModule.h"
+#include "module/RTCModule.h"
 
 #define ROTARY_PINA 26 //2 DT
 #define ROTARY_PINB 27 //4 CLK
@@ -91,14 +92,11 @@ void IRAM_ATTR timerISR() {
 void setup(){
 		Serial.begin(115200);
 
-		
-
-		
-
 		int module_errors = 0;
-		Serial.printf("/// INITIALISING MODULES ///\n");
+		Serial.printf("/// INITIALISING MODULES ///\n\n");
 
 		module_errors += TempModule::initialise(32);
+		module_errors += RTCModule::initialise();
 
 		initializeScreens();
 
@@ -114,8 +112,8 @@ void setup(){
 		tft.setRotation(1);
 		tft.fillScreen(TFT_BLACK);
 		
-		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
-		Serial.printf("Module Errors: %d\n", module_errors);
+		Serial.printf("\n/// FINISHED INITIALISING MODULES ///\n");
+		Serial.printf("Module Errors: %d\n\n", module_errors);
 		//timer = timerBegin(0, 240, true);
 		//timerAttachInterrupt(timer, &timerISR, true);
 		//timerAlarmWrite(timer, 2000000, true);
@@ -134,12 +132,12 @@ void loop(){
 		rotationFlag = 0;
 		Nav::currentScreen->onRotation();
 	}
-	if (millis() > lastTime + 150)
+	if (millis() > lastTime + 1000)
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();
-
-		Serial.printf("Temp: %f\n", TempModule::getTempC());
+		DateTime now = RTCModule::getTime();
+		Serial.printf("Time: %d/%d/%dT%d:%d::%d\n", now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
 		//Serial.println(TempModule::getTempC());
 
 		/*

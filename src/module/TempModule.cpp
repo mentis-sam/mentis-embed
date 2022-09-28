@@ -15,16 +15,18 @@ int TempModule::initialise(uint8_t pin)
     selected = _ds.selectNext();
 
     if (selected) {
-        Serial.println("Temperature module initialised");
+        
         // Check tempModule in low resolution mode, if not set mode
         if (_ds.getResolution() != 9){
             Serial.printf("Setting Temperature Module to low res mode\n");
             _ds.setResolution(9);
         }
+
+        Serial.println("Temperature module initialised\n");
         return 0;
     } 
-    
-    Serial.println("Temperature module failed to initialise");
+
+    Serial.println("Temperature module failed to initialise\n");
     return 1;
 }
 
