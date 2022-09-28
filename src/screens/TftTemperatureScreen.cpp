@@ -1,6 +1,6 @@
 #include "TftTemperatureScreen.h"
 #include "Free_Fonts.h"
-#include "utils\screen_utils.h"
+#include "utils/screen_utils.h"
 
 TftTemperatureScreen::TftTemperatureScreen(char *title)
 : TftScreen()

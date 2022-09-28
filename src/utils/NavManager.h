@@ -3,28 +3,28 @@
 
 #include "TFT_eSPI.h"
 
-#include "screens\TftNavScreen.h"
-#include "screens\TftScreen.h"
+#include "screens/TftNavScreen.h"
+#include "screens/TftScreen.h"
 
-#include "screen_files\menu_colonise.h"
-#include "screen_files\menu_dehydrate.h"
-#include "screen_files\menu_mycelium.h"
-#include "screen_files\menu_settings.h"
+#include "screen_files/menu_colonise.h"
+#include "screen_files/menu_dehydrate.h"
+#include "screen_files/menu_mycelium.h"
+#include "screen_files/menu_settings.h"
 
-#include "screen_files\colonise_close.h"
-#include "screen_files\colonise_colonising.h"
-#include "screen_files\colonise_inject.h"
-#include "screen_files\colonise_insert.h"
-#include "screen_files\colonise_wipe.h"
+#include "screen_files/colonise_close.h"
+#include "screen_files/colonise_colonising.h"
+#include "screen_files/colonise_inject.h"
+#include "screen_files/colonise_insert.h"
+#include "screen_files/colonise_wipe.h"
 
-#include "screen_files\mycelium_close.h"
-#include "screen_files\mycelium_fruiting.h"
-#include "screen_files\mycelium_insert.h"
+#include "screen_files/mycelium_close.h"
+#include "screen_files/mycelium_fruiting.h"
+#include "screen_files/mycelium_insert.h"
 
-#include "screen_files\help_inject.h"
-#include "screen_files\help_insert.h"
-#include "screen_files\help_lid.h"
-#include "screen_files\help_wipe.h"
+#include "screen_files/help_inject.h"
+#include "screen_files/help_insert.h"
+#include "screen_files/help_lid.h"
+#include "screen_files/help_wipe.h"
 
 class TftNavScreen;
 

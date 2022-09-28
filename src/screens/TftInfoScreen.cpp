@@ -1,7 +1,7 @@
 #include "TftInfoScreen.h"
 #include "Free_Fonts.h"
 //#include <PNGdec.h>
-#include "utils\screen_utils.h"
+#include "utils/screen_utils.h"
 // #include "qrcode1.h"
 
 //PNG png; // PNG decoder inatance

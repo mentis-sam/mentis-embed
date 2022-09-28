@@ -1,6 +1,6 @@
 #include "TftSetupScreen.h"
 #include "Free_Fonts.h"
-#include "utils\screen_utils.h"
+#include "utils/screen_utils.h"
 
 #define DISPLAY_WIDTH 20
 

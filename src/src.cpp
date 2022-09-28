@@ -8,7 +8,7 @@
 #include <TFT_eSPI.h>
 #include <SPI.h>
 
-#include "utils\NavManager.h"
+#include "utils/NavManager.h"
 
 #define ROTARY_PINA 26 //2 DT
 #define ROTARY_PINB 27 //4 CLK

@@ -7,8 +7,8 @@
 
 #include "TftScreen.h"
 
-#include "utils\NavManager.h"
-#include "utils\screen_utils.h"
+#include "utils/NavManager.h"
+#include "utils/screen_utils.h"
 
 extern TFT_eSPI tft;
 extern volatile int8_t g_rotValue;
