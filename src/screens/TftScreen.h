@@ -11,11 +11,16 @@ class TftScreen {
 public:
 
     TftScreen();
+    virtual void load(void) = 0;
+    //virtual void unload(void) = 0;
+
     virtual void render(void) = 0;
-    virtual void rerender(void) = 0;
     virtual void nextFrame(void) = 0;
     virtual void onClick(void) = 0;
-    virtual void onRotation(void) = 0;
+    virtual void onLeft(void) = 0;
+    virtual void onRight(void) = 0;
+protected:
+    bool _loaded;
 };
 
 

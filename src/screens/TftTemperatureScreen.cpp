@@ -8,7 +8,7 @@ TftTemperatureScreen::TftTemperatureScreen(char *title)
 }
 
 
-void TftTemperatureScreen::render(void)
+void TftTemperatureScreen::load(void)
 {
     currentScreen = this;
 
@@ -27,7 +27,7 @@ void TftTemperatureScreen::render(void)
     tft.setTextColor(TFT_WHITE);
     tft.drawString("C", (SCREEN_WIDTH / 3) * 2, SCREEN_HEIGHT / 2, GFXFF);
 
-    rerender();
+    render();
 }
 
 void TftTemperatureScreen::nextFrame(void)
@@ -42,7 +42,7 @@ void TftTemperatureScreen::onRotation(void)
 {
 }
 
-void TftTemperatureScreen::rerender(void)
+void TftTemperatureScreen::render(void)
 {
     static char s[10];
 

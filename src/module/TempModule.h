@@ -3,11 +3,13 @@
 
 #include <DS18B20.h>
 
+#define TEMP_PIN 32
+
 class TempModule {
 public:
     TempModule(void);
-    static int   initialise(uint8_t pin);
-    static float getTempC(void);
+    static uint8_t initialise();
+    static float    getTempC(void);
 private:
     static DS18B20   _ds;
 };

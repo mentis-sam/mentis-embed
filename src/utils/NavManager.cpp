@@ -31,9 +31,7 @@ void gotoScreen(TftScreen* screen) {
     if (screen == NULL) {
         return;
     }
-
     currentScreen = screen;
-    currentScreen->render();
 }
 
 }

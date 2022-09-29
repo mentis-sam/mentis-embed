@@ -28,11 +28,14 @@ public:
     TftNavScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames,  TftScreen* navLeft, TftScreen* navRight, TftScreen* navSelect);
 
     // void setChoices(TftMenuItem **choices, int len);
-    void rerender(void);
+    void load(void);
+
     void render(void);
     void nextFrame(void);
+
     void onClick(void);
-    void onRotation(void);
+    void onLeft(void);
+    void onRight(void);
 };
 
 

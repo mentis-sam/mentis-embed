@@ -6,13 +6,14 @@ RTCModule::RTCModule(void)
 {
 }
 
-int RTCModule::initialise(void)
+uint8_t RTCModule::initialise(void)
 {
     
     // TODO: Increase I2C clock speed currently at 100kHz
     //Wire.setClock(200000);   
+    // Automatically uses pins 21, 22
     Wire.begin();
-    Serial.println(Wire.getClock());
+    //Serial.println(Wire.getClock());
 
     RTC.begin();
 

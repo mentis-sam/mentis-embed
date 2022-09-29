@@ -15,8 +15,10 @@ public:
 
     TftInfoScreen(char *title);
 
-    void render(void);  
-    void rerender(void);
+    void load(void);  
+    void unload(void);
+    
+    void render(void);
     void nextFrame(void);
     void onClick(void);
     void onRotation(void);

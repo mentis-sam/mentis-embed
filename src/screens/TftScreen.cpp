@@ -1,5 +1,5 @@
 #include "TftScreen.h"
 
-TftScreen::TftScreen(void)
+TftScreen::TftScreen(void): _loaded(false)
 {
 }

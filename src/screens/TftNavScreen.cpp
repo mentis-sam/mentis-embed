@@ -60,17 +60,26 @@ TftNavScreen::TftNavScreen(const uint8_t* frame_data, const uint32_t* frame_len,
     frame_l = frame_len;
 }
 
-void TftNavScreen::render(void)
+void TftNavScreen::load(void)
 {
+    if (_loaded){
+        return;
+    }
+
     frame = 0;
-    g_rotValue = 0;
     //tft.fillScreen(TFT_BLACK);
     //this->onRotation();
-    rerender();
+    _loaded = true;
+    render();
 }
 
-void TftNavScreen::rerender(void)
+void TftNavScreen::render(void)
 {
+    // Dont render is not loaded
+    if (!_loaded){
+        return;
+    }
+
     int offset = 0;
     for (int i = 0; i < frame; i++){
         offset += frame_l[i];
@@ -111,19 +120,23 @@ void TftNavScreen::nextFrame(void)
     if (frame == frames){
         frame = 0;
     }
-    rerender();
+    render();
 }
 
-void TftNavScreen::onRotation(void)
+void TftNavScreen::onLeft(void)
 {
-    if (g_rotValue < 0){
-        Nav::gotoScreen(navLeft);
-    }else if (g_rotValue > 0){
-        Nav::gotoScreen(navRight);
-    }
+    Nav::gotoScreen(navLeft);
+    _loaded = false;
+}
+
+void TftNavScreen::onRight(void)
+{
+    Nav::gotoScreen(navRight);
+    _loaded = false;
 }
 
 void TftNavScreen::onClick(void)
 {
     Nav::gotoScreen(navSelect);
+    _loaded = false;
 }

@@ -40,7 +40,7 @@ TftSetupScreen::TftSetupScreen(char *title, char *text)
     strcpy(this->text, text);
 }
 
-void TftSetupScreen::render(void)
+void TftSetupScreen::load(void)
 {
     highlightedBtn = 0;
     currentScreen = this;
@@ -54,7 +54,7 @@ void TftSetupScreen::render(void)
     tft.drawCentreString("Back", 53 ,195, 4);
     tft.drawCentreString("OK", 159 ,195, 4);
     tft.drawCentreString("Info", 265 ,195, 4);
-    rerender();
+    render();
 
 }
 
@@ -85,10 +85,10 @@ void TftSetupScreen::onRotation(void)
     if (toHighlight == highlightedBtn)
         return;
     highlightedBtn = toHighlight;
-    rerender();
+    render();
 }
 
-void TftSetupScreen::rerender(void)
+void TftSetupScreen::render(void)
 {
 
     drawRectStroke(0, 170, 106, 70, 5, highlightedBtn == 0 ? TFT_WHITE : TFT_BLACK);

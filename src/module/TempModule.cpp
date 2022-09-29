@@ -8,9 +8,9 @@ TempModule::TempModule(void)
 {
 }
 
-int TempModule::initialise(uint8_t pin)
+uint8_t TempModule::initialise()
 {
-    _ds = DS18B20(pin);
+    _ds = DS18B20(TEMP_PIN);
 
     selected = _ds.selectNext();
 

@@ -4,6 +4,7 @@
         "typeinfo": "cpp",
         "sstream": "cpp",
         "algorithm": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "functional": "cpp"
     }
 }
