@@ -78,13 +78,18 @@ def complete_single(name, folder, filename):
 
 #complete_folder("mycelium", "Mycelium", ["Close", "Fruiting", "Insert"], [12] * 3)
 
-complete_folder("settings", "Settings", ["Airflow", "Temperature", "Time Period", "Light"], [10, 11, 50, 10])
+complete_folder("settings", "Settings", ["Airflow", "Temperature", "Time Period", "Light"], [10, 11, 49, 10])
 
 #This is marginally better to read
-f = []
-f.extend([f'img/Settings/Menu/Settings {n}.png' for n in range(1,5)])
-f.extend([f'img/Settings/Menu/Colonisation {n}.png' for n in range(1,5)])
-f.extend([f'img/Settings/Menu/Fruiting {n}.png' for n in range(1,6)])
-f.extend([f'img/Settings/Menu/Beep {n}.png' for n in range(1,5)])
+#f = []
+#f.extend([f'img/Settings/Menu/Settings {n}.png' for n in range(1,5)])
+#f.extend([f'img/Settings/Menu/Colonisation {n}.png' for n in range(1,5)])
+#f.extend([f'img/Settings/Menu/Fruiting {n}.png' for n in range(1,6)])
+#f.extend([f'img/Settings/Menu/Beep {n}.png' for n in range(1,5)])
 
-create_header("settings_menu_i", f)
+#create_header("settings_menu_i", f)
+
+f = []
+f.extend([f'img/Settings/Temperature/Temperature {n}.png' for n in range(1,12)])
+
+create_header("settings_temperature_i", f)

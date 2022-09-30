@@ -67,7 +67,7 @@ void EncoderModule::_rotarySwitchISR()
     static long lastSwitchTrigger = 0;
 	long t = millis();
 
-	if (t - lastSwitchTrigger < 150)
+	if (t - lastSwitchTrigger < 250)
 		return;
 	lastSwitchTrigger = t;
 
