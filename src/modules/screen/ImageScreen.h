@@ -9,11 +9,6 @@
 
 class ImageScreen: public Screen {
 public: 
-    const uint8_t* frame_d;
-    const uint32_t* frame_l;
-
-    uint8_t frame;
-    
     ImageScreen(const uint8_t* frame_data, const uint32_t* frame_len);
 
     void load(void);
@@ -22,6 +17,11 @@ public:
     virtual void onSelect(void)  = 0;
     virtual void onLeft(void)    = 0;
     virtual void onRight(void)   = 0;
+protected:
+    const uint8_t*  _frame_d;
+    const uint32_t* _frame_l;
+
+    uint8_t _frame;
 private:
     static  void _pngDraw(PNGDRAW *pDraw);
 };

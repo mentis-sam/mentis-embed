@@ -36,68 +36,84 @@ ImageScreen(frame_data, frame_len)
 {
 }
 
+void SettingsScreen::load(void){
+    if (_loaded){
+        return;
+    }
+    _loaded = true;
+    render();
+}
+
 void SettingsScreen::nextFrame(void)
 {
 }
 
 void SettingsScreen::onLeft(void)
 {
-    if (nav_lookup[frame] < 0){
-        callFunc(nav_lookup[frame]);
+    if (nav_lookup[_frame] < 0){
+        callFunc(nav_lookup[_frame]);
     }else{
-        frame = nav_lookup[frame];
+        _frame = nav_lookup[_frame];
         render();
     }
 }
 
 void SettingsScreen::onRight(void)
 {
-    if (nav_lookup[frame+nav_screens] < 0){
-        callFunc(nav_lookup[frame+nav_screens]);
+    if (nav_lookup[_frame+nav_screens] < 0){
+        callFunc(nav_lookup[_frame+nav_screens]);
     }else{
-        frame = nav_lookup[frame+nav_screens];
+        _frame = nav_lookup[_frame+nav_screens];
         render();
     }
 }
 
 void SettingsScreen::onSelect(void)
 {
-    if (nav_lookup[frame+nav_screens*2] < 0){
-        callFunc(nav_lookup[frame+nav_screens*2]);
+    if (nav_lookup[_frame+nav_screens*2] < 0){
+        callFunc(nav_lookup[_frame+nav_screens*2]);
     }else{
-        frame = nav_lookup[frame+nav_screens*2];
+        _frame = nav_lookup[_frame+nav_screens*2];
         render();
     }
 }
-
 
 void SettingsScreen::callFunc(int8_t id){
     switch (id)
     {
     case f_bk:
         Nav::gotoScreen(&Nav::menu_settings);
+        _frame = 0;
         _loaded = false;
         break;
     case fc_1:
-            
+        Nav::gotoScreen(&Nav::settings_c_time);
+        _loaded = false;
         break;
     case fc_2:
-            
+        // FIXME: temp screen causes crash - error in the generated file?
+        Nav::gotoScreen(&Nav::settings_c_temp);
+        _loaded = false;
         break;
     case fc_3:
-            
+        Nav::gotoScreen(&Nav::settings_c_airflow);
+        _loaded = false;
         break;
     case ff_1:
-            
+        Nav::gotoScreen(&Nav::settings_f_time);
+        _loaded = false;
         break;
     case ff_2:
-            
+        Nav::gotoScreen(&Nav::settings_f_temp);
+        _loaded = false;
         break;
     case ff_3:
-            
+        Nav::gotoScreen(&Nav::settings_f_airflow);
+        _loaded = false;
         break;
     case ff_4:
-            
+        Nav::gotoScreen(&Nav::settings_f_light);
+        _loaded = false;
         break;
     case fb_1:
             

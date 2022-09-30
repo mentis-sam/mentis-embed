@@ -8,6 +8,8 @@
 
 //extern TFT_eSPI tft;
 
+// TODO: REMOVE NEED TO SET _loaded = false on screen change
+// too easy to forget
 class Screen {
 public:
     Screen();

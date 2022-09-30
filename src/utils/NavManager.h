@@ -3,7 +3,9 @@
 
 #include "modules/screen/NavScreen.h"
 #include "modules/screen/SettingsScreen.h"
-//#include "modules/screen/Screen.h"
+#include "modules/screen/InputScreen.h"
+
+#include "utils/settings.h"
 
 #include "screen_files/menu_colonise.h"
 #include "screen_files/menu_dehydrate.h"
@@ -27,13 +29,20 @@
 
 #include "screen_files/settings_menu.h"
 
+#include "screen_files/settings_timeperiod.h"
+#include "screen_files/settings_temperature.h"
+#include "screen_files/settings_airflow.h"
+#include "screen_files/settings_light.h"
+
 class NavScreen;
 class SettingsScreen;
+class InputScreen;
 //class Screen;
 
 namespace Nav {
 
 extern Screen* currentScreen;
+extern Screen* lastScreen;
 
 extern NavScreen menu_colonise;
 extern NavScreen menu_mycelium;
@@ -60,9 +69,19 @@ extern NavScreen help_wipe_c;
 extern NavScreen help_insert_m;
 extern NavScreen help_lid_m;
 
-extern SettingsScreen screen_menu;
+extern SettingsScreen settings_menu;
+
+extern InputScreen settings_c_time;
+extern InputScreen settings_c_temp;
+extern InputScreen settings_c_airflow;
+
+extern InputScreen settings_f_time;
+extern InputScreen settings_f_temp;
+extern InputScreen settings_f_airflow;
+extern InputScreen settings_f_light;
 
 void gotoScreen(Screen* screen, bool load = true); 
+void back(bool load = true);
 
 }
 

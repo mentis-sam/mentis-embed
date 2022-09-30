@@ -8,6 +8,7 @@ class SettingsScreen: public ImageScreen {
 public: 
     SettingsScreen(const uint8_t* frame_data, const uint32_t* frame_len);
 
+    void load(void);
     void nextFrame(void);
     
     void onSelect(void);

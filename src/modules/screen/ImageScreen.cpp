@@ -3,7 +3,7 @@
 PNG png; // PNG decoder inatance
 
 ImageScreen::ImageScreen(const uint8_t* frame_data, const uint32_t* frame_len):
-Screen(), frame_d(frame_data), frame_l(frame_len)
+Screen(), _frame_d(frame_data), _frame_l(frame_len)
 {
 }
 
@@ -20,7 +20,7 @@ void ImageScreen::load(void)
     if (_loaded){
         return;
     }
-    frame = 0;
+    _frame = 0;
     _loaded = true;
     render();
 }
@@ -34,11 +34,11 @@ void ImageScreen::render(void)
 
     // TODO: This could be faster if precalced
     int offset = 0;
-    for (int i = 0; i < frame; i++){
-        offset += frame_l[i];
+    for (int i = 0; i < _frame; i++){
+        offset += _frame_l[i];
     };
 
-    int16_t rc = png.openFLASH((uint8_t*)&frame_d[offset], frame_l[frame], _pngDraw);
+    int16_t rc = png.openFLASH((uint8_t*)&_frame_d[offset], _frame_l[_frame], _pngDraw);
     if (rc == PNG_SUCCESS) {
         rc = png.decode(NULL, 0);
         png.close();

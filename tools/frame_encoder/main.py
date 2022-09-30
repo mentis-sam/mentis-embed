@@ -78,7 +78,7 @@ def complete_single(name, folder, filename):
 
 #complete_folder("mycelium", "Mycelium", ["Close", "Fruiting", "Insert"], [12] * 3)
 
-#complete_folder("settings", "Settings", ["Airflow", "Temperature", "Time Period", "Light"], [10, 11, 50, 10])
+complete_folder("settings", "Settings", ["Airflow", "Temperature", "Time Period", "Light"], [10, 11, 50, 10])
 
 #This is marginally better to read
 f = []

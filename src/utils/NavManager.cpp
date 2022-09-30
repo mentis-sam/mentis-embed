@@ -3,6 +3,7 @@
 namespace Nav {
 
 Screen* currentScreen = NULL;
+Screen* lastScreen    = NULL;
 
 SettingsScreen settings_menu = SettingsScreen(settings_menu_i, settings_menu_il);
 
@@ -29,13 +30,20 @@ NavScreen help_wipe_c   = NavScreen(help_wipe_i, help_wipe_il, 1, NULL, NULL, &c
 NavScreen help_insert_m = NavScreen(help_insert_i, help_insert_il, 1, NULL, NULL, &mycelium_insert); 
 NavScreen help_lid_m    = NavScreen(help_lid_i, help_lid_il, 1, NULL, NULL, &mycelium_close);
 
+InputScreen settings_c_time    = InputScreen(settings_timeperiod_i, settings_timeperiod_il, &c_timeperiod, 50);
+InputScreen settings_c_temp    = InputScreen(settings_temperature_i, settings_temperature_il, &c_temp, 11);
+InputScreen settings_c_airflow = InputScreen(settings_airflow_i, settings_airflow_il, &c_airflow, 10);
 
+InputScreen settings_f_time    = InputScreen(settings_timeperiod_i, settings_timeperiod_il, &f_timeperiod, 50);
+InputScreen settings_f_temp    = InputScreen(settings_temperature_i, settings_temperature_il, &f_temp, 11);
+InputScreen settings_f_airflow = InputScreen(settings_airflow_i, settings_airflow_il, &f_airflow, 10);
+InputScreen settings_f_light   = InputScreen(settings_light_i, settings_light_il, &f_light, 10);
 
-
-void gotoScreen(Screen* screen, bool load) {
+void gotoScreen(Screen* screen, bool load){
     if (screen == NULL) {
         return;
     }
+    
     currentScreen = screen;
 
     if (load) { currentScreen->load(); }
