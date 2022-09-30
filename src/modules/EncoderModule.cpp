@@ -25,6 +25,7 @@ EncoderModule::EncoderModule(void)
 
 int8_t EncoderModule::initialise()
 {
+    // TODO: Add debugging
     pinMode(ENCODER_PINA, INPUT_PULLUP);
     pinMode(ENCODER_PINB, INPUT_PULLUP);
     pinMode(ENCODER_PINS, INPUT_PULLUP);
@@ -33,6 +34,8 @@ int8_t EncoderModule::initialise()
     attachInterrupt(ENCODER_PINB, _rotaryEncorderISR, CHANGE);
     attachInterrupt(ENCODER_PINS, _rotarySwitchISR,   RISING);
 
+    Serial.println("Encoder module initialised\n");
+
     return 0;
 }
 
@@ -40,16 +43,13 @@ void EncoderModule::_rotaryEncorderISR()
 {
     // TODO: Optimise this code
 
-	// Grab state of input pins.
-	// uint8_t pinstate = (digitalRead(ENCODER_PINB) << 1) | digitalRead(ENCODER_PINA);
-
     // Refer to https://github.com/buxtronix/arduino/tree/master/libraries/Rotary
 
+    // Grab state of input pins.
 	// Determine new state from the pins and state table.
 	state = ttable[state & 0xf][(digitalRead(ENCODER_PINB) << 1) | digitalRead(ENCODER_PINA)];
 	result = state & 48;
 
-    
 	//portENTER_CRITICAL_ISR(&gpioMux);
 	// Right rotation.
 	if(result == 16){

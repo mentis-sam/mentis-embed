@@ -1,10 +1,8 @@
 #ifndef NAV_MANAGER_H
 #define NAV_MANAGER_H
 
-#include "TFT_eSPI.h"
-
-#include "screens/TftNavScreen.h"
-#include "screens/TftScreen.h"
+#include "modules/screen/NavScreen.h"
+//#include "modules/screen/Screen.h"
 
 #include "screen_files/menu_colonise.h"
 #include "screen_files/menu_dehydrate.h"
@@ -26,38 +24,39 @@
 #include "screen_files/help_lid.h"
 #include "screen_files/help_wipe.h"
 
-class TftNavScreen;
+class NavScreen;
+//class Screen;
 
 namespace Nav {
 
-extern TftScreen* currentScreen;
+extern Screen* currentScreen;
 
-extern TftNavScreen menu_colonise;
-extern TftNavScreen menu_mycelium;
-extern TftNavScreen menu_dehydrate;
-extern TftNavScreen menu_settings;
+extern NavScreen menu_colonise;
+extern NavScreen menu_mycelium;
+extern NavScreen menu_dehydrate;
+extern NavScreen menu_settings;
 
-extern TftNavScreen colonise_close;
-extern TftNavScreen colonise_colonising;
-extern TftNavScreen colonise_inject;
-extern TftNavScreen colonise_insert;
-extern TftNavScreen colonise_wipe;
+extern NavScreen colonise_close;
+extern NavScreen colonise_colonising;
+extern NavScreen colonise_inject;
+extern NavScreen colonise_insert;
+extern NavScreen colonise_wipe;
 
-extern TftNavScreen mycelium_close;
-extern TftNavScreen mycelium_fruiting;
-extern TftNavScreen mycelium_insert;
+extern NavScreen mycelium_close;
+extern NavScreen mycelium_fruiting;
+extern NavScreen mycelium_insert;
 
-extern TftNavScreen help_inject_c;
-extern TftNavScreen help_insert_c;
-extern TftNavScreen help_lid_c;
-extern TftNavScreen help_wipe_c;
+extern NavScreen help_inject_c;
+extern NavScreen help_insert_c;
+extern NavScreen help_lid_c;
+extern NavScreen help_wipe_c;
 
 // Create multiples so that help returns to the correct screen
 // this could definately be done better
-extern TftNavScreen help_insert_m;
-extern TftNavScreen help_lid_m;
+extern NavScreen help_insert_m;
+extern NavScreen help_lid_m;
 
-void gotoScreen(TftScreen* screen); 
+void gotoScreen(Screen* screen); 
 
 }
 

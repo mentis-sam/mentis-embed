@@ -5,24 +5,18 @@
 // +      ...  3.3V
 // GND    ...  GND
 #include <Arduino.h>
-#include <TFT_eSPI.h>
 #include <SPI.h>
 
 
 #include "utils/NavManager.h"
 
-#include "module/TempModule.h"
-#include "module/RTCModule.h"
-#include "module/EncoderModule.h"
+#include "modules/TempModule.h"
+#include "modules/RTCModule.h"
+#include "modules/EncoderModule.h"
 
 volatile int lastTime = 0;
 
 u_long lastIsrAt = 0;
-
-volatile int8_t g_rotValue = 0;
-
-TFT_eSPI tft = TFT_eSPI();
-
 
 hw_timer_t * timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
@@ -49,25 +43,13 @@ void setup(){
 
 		module_errors += TempModule::initialise();
 		module_errors += RTCModule::initialise();
-
-		// TODO: Add debugging
 		module_errors += EncoderModule::initialise();
-
-		initializeScreens();
-
-		tft.init();
-		tft.setRotation(1);
-		tft.fillScreen(TFT_BLACK);
-
+		module_errors += Screen::initialise();
 		
+		initializeScreens();
 		
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
 		Serial.printf("Module Errors: %d\n\n", module_errors);
-		//timer = timerBegin(0, 240, true);
-		//timerAttachInterrupt(timer, &timerISR, true);
-		//timerAlarmWrite(timer, 2000000, true);
-		//timerAlarmEnable(timer);
-
 }
 
 
@@ -78,7 +60,7 @@ void loop(){
 	// TODO: This could be neater & more responsive with callbacks binding in setup
 	if (EncoderModule::selectFlag())
 	{
-		Nav::currentScreen->onClick();
+		Nav::currentScreen->onSelect();
 	}
 	if (EncoderModule::leftFlag())
 	{
@@ -100,14 +82,16 @@ void loop(){
 		Nav::currentScreen->nextFrame();
 	}
 
-		//DateTime now = RTCModule::getTime();
-		//Serial.printf("Time: %d/%d/%dT%d:%d::%d\n", now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
-		//Serial.println(TempModule::getTempC());
 
-		/*
-		tempScreen.temperature = random(200, 250) / 10.0;
 
-		if (IS_CURRENT_SCREEN(tempScreen))
-			tempScreen.rerender();
-		*/
+	//DateTime now = RTCModule::getTime();
+	//Serial.printf("Time: %d/%d/%dT%d:%d::%d\n", now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
+	//Serial.println(TempModule::getTempC());
+
+	/*
+	tempScreen.temperature = random(200, 250) / 10.0;
+
+	if (IS_CURRENT_SCREEN(tempScreen))
+		tempScreen.rerender();
+	*/
 }
