@@ -13,9 +13,8 @@ public:
     const uint32_t* frame_l;
 
     uint8_t frame;
-    const uint8_t frames;
     
-    ImageScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames);
+    ImageScreen(const uint8_t* frame_data, const uint32_t* frame_len);
 
     void load(void);
     void render(void);

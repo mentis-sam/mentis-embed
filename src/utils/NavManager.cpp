@@ -4,10 +4,12 @@ namespace Nav {
 
 Screen* currentScreen = NULL;
 
+SettingsScreen settings_menu = SettingsScreen(settings_menu_i, settings_menu_il);
+
 NavScreen menu_colonise  = NavScreen(menu_colonise_i, menu_colonise_il, 12, &menu_settings, &menu_mycelium, &colonise_wipe);
 NavScreen menu_mycelium  = NavScreen(menu_mycelium_i, menu_mycelium_il, 12, &menu_colonise, &menu_dehydrate, &mycelium_insert);
 NavScreen menu_dehydrate = NavScreen(menu_dehydrate_i, menu_dehydrate_il, 12, &menu_mycelium, &menu_settings, NULL);
-NavScreen menu_settings  = NavScreen(menu_settings_i, menu_settings_il, 12, &menu_dehydrate, &menu_colonise, NULL);
+NavScreen menu_settings  = NavScreen(menu_settings_i, menu_settings_il, 12, &menu_dehydrate, &menu_colonise, &settings_menu);
 
 NavScreen colonise_close      = NavScreen(colonise_close_i, colonise_close_il, 12, &colonise_insert, &colonise_colonising, &help_lid_c); 
 NavScreen colonise_colonising = NavScreen(colonise_colonising_i, colonise_colonising_il, 12, NULL, NULL, &menu_colonise); 
@@ -27,11 +29,16 @@ NavScreen help_wipe_c   = NavScreen(help_wipe_i, help_wipe_il, 1, NULL, NULL, &c
 NavScreen help_insert_m = NavScreen(help_insert_i, help_insert_il, 1, NULL, NULL, &mycelium_insert); 
 NavScreen help_lid_m    = NavScreen(help_lid_i, help_lid_il, 1, NULL, NULL, &mycelium_close);
 
-void gotoScreen(Screen* screen) {
+
+
+
+void gotoScreen(Screen* screen, bool load) {
     if (screen == NULL) {
         return;
     }
     currentScreen = screen;
+
+    if (load) { currentScreen->load(); }
 }
 
 }

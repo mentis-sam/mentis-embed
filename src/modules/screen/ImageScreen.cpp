@@ -2,8 +2,8 @@
 
 PNG png; // PNG decoder inatance
 
-ImageScreen::ImageScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames):
-Screen(), frame_d(frame_data), frame_l(frame_len), frames(frames)
+ImageScreen::ImageScreen(const uint8_t* frame_data, const uint32_t* frame_len):
+Screen(), frame_d(frame_data), frame_l(frame_len)
 {
 }
 

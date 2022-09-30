@@ -2,6 +2,7 @@
 #define NAV_MANAGER_H
 
 #include "modules/screen/NavScreen.h"
+#include "modules/screen/SettingsScreen.h"
 //#include "modules/screen/Screen.h"
 
 #include "screen_files/menu_colonise.h"
@@ -24,7 +25,10 @@
 #include "screen_files/help_lid.h"
 #include "screen_files/help_wipe.h"
 
+#include "screen_files/settings_menu.h"
+
 class NavScreen;
+class SettingsScreen;
 //class Screen;
 
 namespace Nav {
@@ -56,7 +60,9 @@ extern NavScreen help_wipe_c;
 extern NavScreen help_insert_m;
 extern NavScreen help_lid_m;
 
-void gotoScreen(Screen* screen); 
+extern SettingsScreen screen_menu;
+
+void gotoScreen(Screen* screen, bool load = true); 
 
 }
 
