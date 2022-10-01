@@ -18,13 +18,17 @@ void MachineState::startState(uint8_t state, DateTime length)
 {
     if (state == none){
         TempController::off();
-        digitalWrite(LED_PIN, LOW);
+        // LED
+        ledcWrite(0, 0);
     } else if (state == colonisation){
         TempController::setTemp(c_temp);
-        digitalWrite(LED_PIN, LOW);
+        ledcWrite(0, 0);
     } else if (state == fruiting){
         TempController::setTemp(f_temp);
-        digitalWrite(LED_PIN, HIGH);
+
+        uint8_t duty = round(16 * (float)f_light/11);
+
+        ledcWrite(0, duty);
     } else if (state == dehydration){
         TempController::setTemp(d_temp);
         digitalWrite(LED_PIN, LOW);

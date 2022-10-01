@@ -5,6 +5,7 @@
         "sstream": "cpp",
         "algorithm": "cpp",
         "new": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "cmath": "cpp"
     }
 }
