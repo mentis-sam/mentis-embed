@@ -9,10 +9,15 @@
 
 
 #include "utils/NavManager.h"
+#include "utils/MachineState.h"
+#include "utils/TempController.h"
+#include "utils/IO.h"
 
 #include "modules/TempModule.h"
 #include "modules/RTCModule.h"
 #include "modules/EncoderModule.h"
+
+
 
 volatile int lastTime = 0;
 
@@ -21,11 +26,6 @@ u_long lastIsrAt = 0;
 hw_timer_t * timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 
-void initializeScreens(void)
-{
-	Nav::gotoScreen(&Nav::menu_colonise);
-	Nav::currentScreen->load();
-}
 
 void IRAM_ATTR timerISR() {
   	portENTER_CRITICAL_ISR(&timerMux);
@@ -38,18 +38,24 @@ void IRAM_ATTR timerISR() {
 void setup(){
 		Serial.begin(115200);
 
-		uint8_t module_errors = 0;
+		uint8_t errors = 0;
 		Serial.printf("/// INITIALISING MODULES ///\n\n");
 
-		module_errors += TempModule::initialise();
-		module_errors += RTCModule::initialise();
-		module_errors += EncoderModule::initialise();
-		module_errors += Screen::initialise();
-		
-		initializeScreens();
-		
+		errors += TempModule::initialise();
+		errors += RTCModule::initialise();
+		errors += EncoderModule::initialise();
+		errors += Screen::initialise();
+
+		errors += IO::initialise();
+		errors += MachineState::initialise();
+		errors += TempController::initialise();
+
+		Nav::gotoScreen(&Nav::menu_colonise);
+		Nav::currentScreen->load();
+
+
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
-		Serial.printf("Module Errors: %d\n\n", module_errors);
+		Serial.printf("Module Errors: %d\n\n", errors);
 }
 
 
@@ -80,6 +86,9 @@ void loop(){
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();
+
+		StateController::update();
+		TempController::update();
 	}
 
 

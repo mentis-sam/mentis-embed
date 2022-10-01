@@ -9,7 +9,7 @@
 class RTCModule {
 public:
     RTCModule(void);
-    static uint8_t initialise(void);
+    static uint8_t  initialise(void);
     static DateTime getTime(void);
 private:
 

@@ -91,7 +91,6 @@ void SettingsScreen::callFunc(int8_t id){
         _loaded = false;
         break;
     case fc_2:
-        // FIXME: temp screen causes crash - error in the generated file?
         Nav::gotoScreen(&Nav::settings_c_temp);
         _loaded = false;
         break;

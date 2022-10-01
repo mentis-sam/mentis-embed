@@ -14,6 +14,11 @@ extern uint8_t f_temp;
 extern uint8_t f_airflow;
 extern uint8_t f_light;
 
+extern uint8_t d_timeperiod;
+extern uint8_t d_temp;
+
 extern uint8_t beep;
+
+void saveSettings(void);
 
 #endif /* SETTINGS */

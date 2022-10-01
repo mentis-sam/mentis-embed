@@ -38,16 +38,9 @@ void ImageScreen::render(void)
         offset += _frame_l[i];
     };
 
-    Serial.println("A");
-
     int16_t rc = png.openFLASH((uint8_t*)&_frame_d[offset], _frame_l[_frame], _pngDraw);
-    Serial.println("B");
     if (rc == PNG_SUCCESS) {
-        Serial.println("C");
         rc = png.decode(NULL, 0);
-        Serial.println("D");
         png.close();
-        Serial.println("E");
     };
-    Serial.println("F");
 }
