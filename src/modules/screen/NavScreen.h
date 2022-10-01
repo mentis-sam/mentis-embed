@@ -14,6 +14,7 @@ public:
 
     NavScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames,  Screen* navLeft, Screen* navRight, Screen* navSelect);
 
+    // TODO: implement load -> function to be called passed by ref to start states
     void nextFrame(void);
     void onSelect(void);
     void onLeft(void);

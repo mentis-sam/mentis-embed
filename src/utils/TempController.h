@@ -8,7 +8,7 @@ class TempController{
 public:
     TempController();
 
-    static void initialise();
+    static uint8_t initialise();
 
     static void setTemp(uint8_t temp);
     static void off();

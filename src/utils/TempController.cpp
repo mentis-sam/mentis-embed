@@ -9,9 +9,10 @@ bool    TempController::_heaterPin = false;
 TempController::TempController()
 {}
 
-void TempController::initialise()
+uint8_t TempController::initialise()
 {
     TempController::off();
+    return 0;
 }
 
 void TempController::setTemp(uint8_t temp)

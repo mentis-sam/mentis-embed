@@ -17,8 +17,6 @@
 #include "modules/RTCModule.h"
 #include "modules/EncoderModule.h"
 
-
-
 volatile int lastTime = 0;
 
 u_long lastIsrAt = 0;
@@ -87,7 +85,12 @@ void loop(){
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();
 
+		//TODO: Make these happen different rates
+
+		// 5 min
 		StateController::update();
+
+		// 5 sec
 		TempController::update();
 	}
 
