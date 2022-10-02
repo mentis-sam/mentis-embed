@@ -13,10 +13,11 @@ public:
     FileManager();
     ~FileManager();
 
-    bool exists(const char* file);
+    static uint8_t initialise(void);
+    static bool exists(const char* file);
 
-    void read(const char* file, void *obj, uint8_t size);
-    void write(const char* file, void *obj, uint8_t size);
+    static void read(const char* file, void *obj, uint8_t size);
+    static void write(const char* file, void *obj, uint8_t size);
 private:
 
 };

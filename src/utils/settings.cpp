@@ -1,18 +1,34 @@
 #include "settings.h"
 
-uint8_t c_timeperiod = 21;
-uint8_t c_temp = 5;
-uint8_t c_airflow = 5;
+Settings settings = {
+    .c_timeperiod = 21,
+    .c_temp = 5,
+    .c_airflow = 5,
 
-uint8_t f_timeperiod = 14;
-uint8_t f_temp = 5;
-uint8_t f_airflow = 5;
-uint8_t f_light = 5;
+    .f_timeperiod = 14,
+    .f_temp = 5,
+    .f_airflow = 5,
+    .f_light = 5,
 
-uint8_t d_timeperiod = 14;
-uint8_t d_temp = 100;
+    .d_timeperiod = 14,
+    .d_temp = 50,
+    .d_airflow = 5,
 
-uint8_t beep = 0;
+    .beep = 0
+};
+
+void loadSettings(void)
+{
+    if (FileManager::exists("/settings")){
+        FileManager::read("/settings", &settings, sizeof(settings));
+    }else{
+        // First time create the file
+        saveSettings();
+    }
+    
+}
 
 void saveSettings(void)
-{}
+{
+    FileManager::write("/settings", &settings, sizeof(settings));
+}

@@ -24,16 +24,16 @@ void MachineState::startState(uint8_t state, DateTime length)
         // LED
         ledcWrite(0, 0);
     } else if (state == colonisation){
-        TempController::setTemp(c_temp);
+        TempController::setTemp(settings.c_temp);
         ledcWrite(0, 0);
     } else if (state == fruiting){
-        TempController::setTemp(f_temp);
+        TempController::setTemp(settings.f_temp);
 
-        uint8_t duty = round(16 * (float)f_light/11);
+        uint8_t duty = round(16 * static_cast<float>(settings.f_light)/11);
 
         ledcWrite(0, duty);
     } else if (state == dehydration){
-        TempController::setTemp(d_temp);
+        TempController::setTemp(settings.d_temp);
         digitalWrite(LED_PIN, LOW);
     }
 
@@ -49,7 +49,7 @@ void MachineState::startState(uint8_t state, DateTime length)
 float MachineState::getStateProgress(void)
 {
     uint32_t now = RTCModule::getTime().unixtime();
-    return  static_cast< float >(now - _stateStart) / static_cast< float >(_stateEnd - _stateStart);
+    return  static_cast<float>(now - _stateStart) / static_cast<float>(_stateEnd - _stateStart);
 }
 
 uint8_t MachineState::getState(void)
@@ -59,6 +59,8 @@ uint8_t MachineState::getState(void)
 
 void MachineState::_loadState(void)
 {
+    loadSettings();
+    // Load state
 }
 
 void MachineState::_saveState(void)
@@ -91,7 +93,7 @@ void StateController::update(void)
         return;
     } else if (state == colonisation) {
         Nav::gotoScreen(&Nav::mycelium_fruiting);
-        MachineState::startState(fruiting, DateTime(0, 0, f_timeperiod, 0, 0, 0));
+        MachineState::startState(fruiting, DateTime(0, 0, settings.f_timeperiod, 0, 0, 0));
     } else if (state == fruiting){
         Nav::gotoScreen(&Nav::menu_mycelium);
         MachineState::startState(none, DateTime(0, 0, 0, 0, 0, 0));

@@ -45,12 +45,15 @@ void setup(){
 		errors += Screen::initialise();
 
 		errors += IO::initialise();
+		errors += FileManager::initialise();
+
 		errors += MachineState::initialise();
 		errors += TempController::initialise();
 
+		
+
 		Nav::gotoScreen(&Nav::menu_colonise);
 		Nav::currentScreen->load();
-
 
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
 		Serial.printf("Module Errors: %d\n\n", errors);
