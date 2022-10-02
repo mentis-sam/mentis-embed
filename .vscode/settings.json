@@ -6,6 +6,24 @@
         "algorithm": "cpp",
         "new": "cpp",
         "functional": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "*.tcc": "cpp",
+        "optional": "cpp",
+        "random": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "streambuf": "cpp",
+        "cstdlib": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "exception": "cpp",
+        "string_view": "cpp",
+        "memory": "cpp",
+        "initializer_list": "cpp",
+        "numeric": "cpp"
     }
 }

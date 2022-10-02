@@ -10,6 +10,11 @@
 #include "IO.h"
 
 enum State { none, colonisation , fruiting , dehydration };
+struct State_Settings{
+    uint8_t  mode;
+    uint32_t startT;
+    uint32_t endT;
+};
 
 class MachineState{
 public:
@@ -23,9 +28,7 @@ private:
     static void _saveState(void);
     static void _loadState(void);
 
-    static uint8_t  _state;
-    static uint32_t _stateStart;
-    static uint32_t _stateEnd;
+    static State_Settings _state;
 };
 
 class StateController{

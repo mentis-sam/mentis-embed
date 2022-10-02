@@ -1,8 +1,10 @@
 #include "MachineState.h"
 
-uint8_t  MachineState::_state = none;
-uint32_t MachineState::_stateStart = 0;
-uint32_t MachineState::_stateEnd = 0;
+State_Settings MachineState::_state = {
+    .mode = none,
+    .startT = 0,
+    .endT = 0
+};
 
 MachineState::MachineState(void)
 {
@@ -37,11 +39,13 @@ void MachineState::startState(uint8_t state, DateTime length)
         digitalWrite(LED_PIN, LOW);
     }
 
-    _state = state;
-    _stateStart = RTCModule::getTime().unixtime();
-    _stateEnd   = _stateStart + length.day()*24*60*60 + length.hour()*60*60;
+    _state.mode = state;
+    _state.startT = RTCModule::getTime().unixtime();
 
-    Serial.printf("Start: %d, End: %d\n", _stateStart, _stateEnd);
+    // TODO: why cant I add the unixtime
+    _state.endT   = _state.startT + length.day()*24*60*60 + length.hour()*60*60;
+
+    Serial.printf("Start: %d, End: %d\n", _state.endT, _state.endT);
 
     _saveState();
 }
@@ -49,12 +53,12 @@ void MachineState::startState(uint8_t state, DateTime length)
 float MachineState::getStateProgress(void)
 {
     uint32_t now = RTCModule::getTime().unixtime();
-    return  static_cast<float>(now - _stateStart) / static_cast<float>(_stateEnd - _stateStart);
+    return  static_cast<float>(now - _state.startT) / static_cast<float>(_state.endT - _state.startT);
 }
 
 uint8_t MachineState::getState(void)
 {
-    return _state;
+    return _state.mode;
 }
 
 void MachineState::_loadState(void)
