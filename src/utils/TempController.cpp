@@ -17,7 +17,7 @@ uint8_t TempController::initialise()
 
 void TempController::setTemp(uint8_t temp)
 {
-    Serial.println("Temp Controller on");
+    Serial.printf("Temp Controller on, set to %d\n", temp);
     digitalWrite(FAN_PIN, HIGH);
     _on = true;
     _temp = temp;

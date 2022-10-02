@@ -14,6 +14,7 @@ uint8_t initialise(void){
     // 1000Hz & 16 bit of resolution
     ledcSetup(0, 1000, 4);
     
+    Serial.println("IO: Initialised");
     return 0;
 }
 

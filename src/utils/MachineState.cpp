@@ -17,7 +17,7 @@ uint8_t MachineState::initialise(void)
 void MachineState::startState(uint8_t state, DateTime length)
 {
     
-    Serial.printf("Started State: %d, Length: %dD, %dH", state, length.day(), length.hour());
+    Serial.printf("\n /// Started State: %d, Length: %dD, %dH /// \n\n", state, length.day(), length.hour());
 
     if (state == none){
         TempController::off();
@@ -39,14 +39,17 @@ void MachineState::startState(uint8_t state, DateTime length)
 
     _state = state;
     _stateStart = RTCModule::getTime().unixtime();
-    _stateEnd   = _stateStart + length.unixtime();
+    _stateEnd   = _stateStart + length.day()*24*60*60 + length.hour()*60*60;
+
+    Serial.printf("Start: %d, End: %d\n", _stateStart, _stateEnd);
+
     _saveState();
 }
 
 float MachineState::getStateProgress(void)
 {
     uint32_t now = RTCModule::getTime().unixtime();
-    return (float)(_stateEnd - now) / (_stateEnd - _stateStart);
+    return  static_cast< float >(now - _stateStart) / static_cast< float >(_stateEnd - _stateStart);
 }
 
 uint8_t MachineState::getState(void)
@@ -74,7 +77,7 @@ void StateController::update(void)
 {
     float progress = MachineState::getStateProgress();
 
-    Serial.printf("State: %d, Progress: %fH", MachineState::getState(), MachineState::getStateProgress());
+    Serial.printf("State: %d, Progress: %f\n", MachineState::getState(), MachineState::getStateProgress());
     
     if (progress < 1) {return;}
 

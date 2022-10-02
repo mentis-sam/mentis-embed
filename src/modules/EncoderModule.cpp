@@ -34,7 +34,7 @@ int8_t EncoderModule::initialise()
     attachInterrupt(ENCODER_PINB, _rotaryEncorderISR, CHANGE);
     attachInterrupt(ENCODER_PINS, _rotarySwitchISR,   RISING);
 
-    Serial.println("Encoder module initialised\n");
+    Serial.println("EncoderModule: Initialised\n");
 
     return 0;
 }

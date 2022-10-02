@@ -6,6 +6,7 @@
 #include "modules/screen/InputScreen.h"
 
 #include "utils/settings.h"
+#include "utils/MachineState.h"
 
 #include "screen_files/menu_colonise.h"
 #include "screen_files/menu_dehydrate.h"

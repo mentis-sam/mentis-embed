@@ -55,7 +55,7 @@ void setup(){
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
 		Serial.printf("Module Errors: %d\n\n", errors);
 
-		MachineState::startState(dehydration, DateTime(0, 0, 0, 1, 0, 0));
+		MachineState::startState(dehydration, DateTime(0, 0, 1, 0, 0, 0));
 }
 
 
@@ -88,7 +88,6 @@ void loop(){
 		Nav::currentScreen->nextFrame();
 	}
 
-	// Render next frame of animation
 	if (millis() > lastTime2 + 5000)
 	{
 		lastTime2 = millis();
@@ -100,7 +99,5 @@ void loop(){
 
 		// 5 sec
 		TempController::update();
-
 	}
-
 }

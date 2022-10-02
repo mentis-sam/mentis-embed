@@ -18,15 +18,15 @@ uint8_t TempModule::initialise()
         
         // Check tempModule in low resolution mode, if not set mode
         if (_ds.getResolution() != 9){
-            Serial.printf("Setting Temperature Module to low res mode\n");
+            Serial.printf("TempModule: Setting low res mode\n");
             _ds.setResolution(9);
         }
 
-        Serial.println("Temperature module initialised\n");
+        Serial.println("TempModule: Initialised\n");
         return 0;
     } 
 
-    Serial.println("Temperature module failed to initialise\n");
+    Serial.println("TempModule: Failed to initialise\n");
     return 1;
 }
 

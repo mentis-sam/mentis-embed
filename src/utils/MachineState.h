@@ -33,6 +33,8 @@ public:
     StateController();
 
     static void update(void);
+private:
+    
 };
 
 #endif /* MACHINE_STATE */

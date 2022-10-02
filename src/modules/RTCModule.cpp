@@ -28,48 +28,26 @@ uint8_t RTCModule::initialise(void)
         RTC.adjust(DateTime(__DATE__, __TIME__));
         }
 
-        Serial.println("RTC module initialised\n");
+        Serial.println("RTCModule: Initialised\n");
         return 0;
     }
 
-    Serial.println("RTC module failed to initialise\n");
+    Serial.println("RTCModule: Failed to initialise\n");
     return 1;  
 }
 
 DateTime RTCModule::getTime(void)
 {
-    return RTC.now();
+    DateTime a = RTC.now();
+    DateTime b = RTC.now();
+
+    // TODO: Add recursion limit
+
+    if (abs((int64_t)b.unixtime() - (int64_t)a.unixtime()) < 5 ){
+        return b;
+    }else{
+        Serial.println("RTCModule: Erronious time returned .. trying again");
+        return RTCModule::getTime();
+    }
 }
 
-   // Search for RTC address if not already known
-
-    /*
-    byte error, address;
-    int nDevices;
-    Serial.println("Scanning...");
-    nDevices = 0;
-    for(address = 1; address < 127; address++ ) {
-        Wire.beginTransmission(address);
-        error = Wire.endTransmission();
-        if (error == 0) {
-        Serial.print("I2C device found at address 0x");
-        if (address<16) {
-            Serial.print("0");
-        }
-        Serial.println(address,HEX);
-        nDevices++;
-        }
-        else if (error==4) {
-        Serial.print("Unknow error at address 0x");
-        if (address<16) {
-            Serial.print("0");
-        }
-        Serial.println(address,HEX);
-        }    
-    }
-    if (nDevices == 0) {
-        Serial.println("No I2C devices found\n");
-    }
-    else {
-        Serial.println("done\n");
-    }*/
