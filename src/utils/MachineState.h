@@ -9,7 +9,8 @@
 
 #include "IO.h"
 
-enum State { none, colonisation , fruiting , dehydration };
+
+
 struct State_Settings{
     uint8_t  mode;
     uint32_t startT;
@@ -21,7 +22,7 @@ public:
     MachineState();
 
     static uint8_t initialise(void);
-    static void    startState(uint8_t state, DateTime length);
+    static void    startState(uint8_t state, uint8_t* length = NULL);
     static float   getStateProgress(void);
     static uint8_t getState(void);
 private:

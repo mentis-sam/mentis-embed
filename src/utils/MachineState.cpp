@@ -16,26 +16,26 @@ uint8_t MachineState::initialise(void)
     return 0;
 }
 
-void MachineState::startState(uint8_t state, DateTime length)
+void MachineState::startState(uint8_t state, uint8_t* length) // FIXME:: LENGTH NEEDS TO BE A REFERENCE 
 {
     
-    Serial.printf("\n /// Started State: %d, Length: %dD, %dH /// \n\n", state, length.day(), length.hour());
+    Serial.printf("\n /// Started State: %d, Length: %dD /// \n\n", state, *length);
 
-    if (state == none){
+    if (state == none | length == NULL){
         TempController::off();
         // LED
         ledcWrite(0, 0);
     } else if (state == colonisation){
-        TempController::setTemp(settings.c_temp);
+        TempController::setTemp(Settings::lerpSettings.c_temp);
         ledcWrite(0, 0);
     } else if (state == fruiting){
-        TempController::setTemp(settings.f_temp);
+        TempController::setTemp(Settings::lerpSettings.f_temp);
 
-        uint8_t duty = round(16 * static_cast<float>(settings.f_light)/11);
+        uint8_t duty = round(16 * static_cast<float>(Settings::lerpSettings.f_light)/11);
 
         ledcWrite(0, duty);
     } else if (state == dehydration){
-        TempController::setTemp(settings.d_temp);
+        TempController::setTemp(Settings::lerpSettings.d_temp);
         digitalWrite(LED_PIN, LOW);
     }
 
@@ -43,9 +43,7 @@ void MachineState::startState(uint8_t state, DateTime length)
     _state.startT = RTCModule::getTime().unixtime();
 
     // TODO: why cant I add the unixtime
-    _state.endT   = _state.startT + length.day()*24*60*60 + length.hour()*60*60;
-
-    Serial.printf("Start: %d, End: %d\n", _state.endT, _state.endT);
+    _state.endT   = _state.startT + *length*24*60*60;
 
     _saveState();
 }
@@ -63,12 +61,31 @@ uint8_t MachineState::getState(void)
 
 void MachineState::_loadState(void)
 {
-    loadSettings();
-    // Load state
+    Settings::loadSettings();
+
+    if (FileManager::exists("/state")){
+        FileManager::read("/state", &_state, sizeof(_state));
+
+        // TODO: this would be nicer as a switch
+        if (_state.mode == none) {
+            return;
+        } else if (_state.mode == colonisation) {
+            Nav::gotoScreen(&Nav::colonise_colonising);
+            MachineState::startState(colonisation, &Settings::lerpSettings.c_timeperiod);
+        } else if (_state.mode == fruiting){
+            Nav::gotoScreen(&Nav::mycelium_fruiting);
+            MachineState::startState(fruiting, &Settings::lerpSettings.f_timeperiod);
+        } else if (_state.mode == dehydration) {
+            // FIXME: This needs to be the new dehydration screen
+            Nav::gotoScreen(&Nav::menu_dehydrate);
+            MachineState::startState(dehydration, &Settings::lerpSettings.d_timeperiod);      
+        }
+    }
 }
 
 void MachineState::_saveState(void)
 {
+    FileManager::write("/state", &_state, sizeof(_state));
 }
 
 ///
@@ -83,7 +100,7 @@ void StateController::update(void)
 {
     float progress = MachineState::getStateProgress();
 
-    Serial.printf("State: %d, Progress: %f\n", MachineState::getState(), MachineState::getStateProgress());
+    Serial.printf("StateController: %d, Progress: %f\n", MachineState::getState(), MachineState::getStateProgress());
     
     if (progress < 1) {return;}
 
@@ -97,12 +114,12 @@ void StateController::update(void)
         return;
     } else if (state == colonisation) {
         Nav::gotoScreen(&Nav::mycelium_fruiting);
-        MachineState::startState(fruiting, DateTime(0, 0, settings.f_timeperiod, 0, 0, 0));
+        MachineState::startState(fruiting, &Settings::lerpSettings.f_timeperiod);
     } else if (state == fruiting){
         Nav::gotoScreen(&Nav::menu_mycelium);
-        MachineState::startState(none, DateTime(0, 0, 0, 0, 0, 0));
+        MachineState::startState(none);
     } else if (state == dehydration) {
         Nav::gotoScreen(&Nav::menu_dehydrate);
-        MachineState::startState(none, DateTime(0, 0, 0, 0, 0, 0));      
+        MachineState::startState(none);      
     }
 }

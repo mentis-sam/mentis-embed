@@ -83,7 +83,7 @@ void SettingsScreen::callFunc(int8_t id){
     {
     case f_bk:
         Nav::gotoScreen(&Nav::menu_settings);
-        saveSettings();
+        Settings::saveSettings();
         _frame = 0;
         _loaded = false;
         break;

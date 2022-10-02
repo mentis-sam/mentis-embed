@@ -45,7 +45,7 @@ void FileManager::write(const char* file, void *obj, uint8_t size)
     File myFile = SPIFFS.open(file, FILE_WRITE);
 
     if (!myFile) {
-        Serial.println("There was an error opening the file for writing");
+        Serial.println("FileManager: There was an error opening the file for writing");
         return;
     }
 
