@@ -18,9 +18,9 @@
 #include "modules/EncoderModule.h"
 
 volatile int lastTime = 0;
+volatile int lastTime2 = 0;
 
 u_long lastIsrAt = 0;
-
 hw_timer_t * timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 
@@ -54,6 +54,8 @@ void setup(){
 
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
 		Serial.printf("Module Errors: %d\n\n", errors);
+
+		MachineState::startState(dehydration, DateTime(0, 0, 0, 1, 0, 0));
 }
 
 
@@ -84,6 +86,12 @@ void loop(){
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();
+	}
+
+	// Render next frame of animation
+	if (millis() > lastTime2 + 5000)
+	{
+		lastTime2 = millis();
 
 		//TODO: Make these happen different rates
 
@@ -92,18 +100,7 @@ void loop(){
 
 		// 5 sec
 		TempController::update();
+
 	}
 
-
-
-	//DateTime now = RTCModule::getTime();
-	//Serial.printf("Time: %d/%d/%dT%d:%d::%d\n", now.day(), now.month(), now.year(), now.hour(), now.minute(), now.second());
-	//Serial.println(TempModule::getTempC());
-
-	/*
-	tempScreen.temperature = random(200, 250) / 10.0;
-
-	if (IS_CURRENT_SCREEN(tempScreen))
-		tempScreen.rerender();
-	*/
 }

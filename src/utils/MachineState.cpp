@@ -16,6 +16,9 @@ uint8_t MachineState::initialise(void)
 
 void MachineState::startState(uint8_t state, DateTime length)
 {
+    
+    Serial.printf("Started State: %d, Length: %dD, %dH", state, length.day(), length.hour());
+
     if (state == none){
         TempController::off();
         // LED
@@ -70,6 +73,8 @@ StateController::StateController(void)
 void StateController::update(void)
 {
     float progress = MachineState::getStateProgress();
+
+    Serial.printf("State: %d, Progress: %fH", MachineState::getState(), MachineState::getStateProgress());
     
     if (progress < 1) {return;}
 

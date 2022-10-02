@@ -17,6 +17,7 @@ uint8_t TempController::initialise()
 
 void TempController::setTemp(uint8_t temp)
 {
+    Serial.println("Temp Controller on");
     digitalWrite(FAN_PIN, HIGH);
     _on = true;
     _temp = temp;
@@ -24,7 +25,9 @@ void TempController::setTemp(uint8_t temp)
 
 void TempController::off()
 {
+    Serial.println("Temp Controller off");
     digitalWrite(FAN_PIN, LOW); digitalWrite(HEATER_PIN, LOW);
+    _heaterPin = false;
     _on = false;
 }
 
@@ -33,7 +36,10 @@ void TempController::update(void)
     // OFF
     if (!_on) { return; }
 
+    // ON
     float temp = TempModule::getTempC();
+
+    Serial.printf("Current temp: %fC, Heater: %d\n", temp, _heaterPin);
 
     // TODO: ADD PID CONTROLLER NOT JUST HYST
     if (_heaterPin & (temp > _temp + (hyst / 2))){
