@@ -1,6 +1,6 @@
 #include "InputScreen.h"
 
-InputScreen::InputScreen(const uint8_t* frame_data, const uint32_t* frame_len, uint8_t* var, const uint8_t range):
+InputScreen::InputScreen(const uint8_t* frame_data, const uint32_t* frame_len, uint16_t* var, const uint8_t range):
 ImageScreen(frame_data, frame_len), _range(range), _var(var)
 {
 }

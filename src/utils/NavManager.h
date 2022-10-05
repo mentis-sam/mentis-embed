@@ -4,6 +4,7 @@
 #include "modules/screen/NavScreen.h"
 #include "modules/screen/SettingsScreen.h"
 #include "modules/screen/InputScreen.h"
+#include "modules/screen/CancelScreen.h"
 
 #include "utils/settings.h"
 #include "utils/MachineState.h"
@@ -18,10 +19,17 @@
 #include "screen_files/colonise_inject.h"
 #include "screen_files/colonise_insert.h"
 #include "screen_files/colonise_wipe.h"
+#include "screen_files/colonise_cancel.h"
 
 #include "screen_files/mycelium_close.h"
 #include "screen_files/mycelium_fruiting.h"
 #include "screen_files/mycelium_insert.h"
+#include "screen_files/mycelium_harvest.h"
+#include "screen_files/mycelium_cancel.h"
+
+#include "screen_files/dehydrate_dehydrating.h"
+#include "screen_files/dehydrate_complete.h"
+#include "screen_files/dehydrate_cancel.h"
 
 #include "screen_files/help_inject.h"
 #include "screen_files/help_insert.h"
@@ -38,6 +46,7 @@
 class NavScreen;
 class SettingsScreen;
 class InputScreen;
+class CancelScreen;
 //class Screen;
 
 namespace Nav {
@@ -55,15 +64,22 @@ extern NavScreen colonise_colonising;
 extern NavScreen colonise_inject;
 extern NavScreen colonise_insert;
 extern NavScreen colonise_wipe;
+extern CancelScreen colonise_cancel;
 
 extern NavScreen mycelium_close;
 extern NavScreen mycelium_fruiting;
 extern NavScreen mycelium_insert;
+extern NavScreen mycelium_complete;
+extern CancelScreen mycelium_cancel;
 
 extern NavScreen help_inject_c;
 extern NavScreen help_insert_c;
 extern NavScreen help_lid_c;
 extern NavScreen help_wipe_c;
+
+extern NavScreen dehydrate_dehydrating;
+extern CancelScreen dehydrate_cancel;
+extern NavScreen dehydrate_complete;
 
 // Create multiples so that help returns to the correct screen
 // this could definately be done better

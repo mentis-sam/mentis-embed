@@ -58,7 +58,7 @@ void setup(){
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
 		Serial.printf("Module Errors: %d\n\n", errors);
 
-		MachineState::startState(dehydration, &Settings::lerpSettings.d_timeperiod);
+		//MachineState::startState(dehydration, &Settings::lerpSettings.d_timeperiod);
 }
 
 

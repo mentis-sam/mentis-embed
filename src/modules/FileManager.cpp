@@ -27,7 +27,8 @@ bool FileManager::exists(const char* file)
 
 void FileManager::read(const char* file, void *obj, uint8_t size)
 {
-    Serial.println("FileManager: Reading file");
+    Serial.printf("FileManager: Reading file ");
+    Serial.println(file);
     File myFile = SPIFFS.open(file, FILE_WRITE);
 
     if (!myFile) {
@@ -41,7 +42,8 @@ void FileManager::read(const char* file, void *obj, uint8_t size)
 
 void FileManager::write(const char* file, void *obj, uint8_t size)
 {
-    Serial.println("FileManager: Writing file");
+    Serial.printf("FileManager: Writing file ");
+    Serial.println(file);
     File myFile = SPIFFS.open(file, FILE_WRITE);
 
     if (!myFile) {

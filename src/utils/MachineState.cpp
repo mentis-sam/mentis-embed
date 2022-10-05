@@ -16,16 +16,27 @@ uint8_t MachineState::initialise(void)
     return 0;
 }
 
-void MachineState::startState(uint8_t state, uint8_t* length) // FIXME:: LENGTH NEEDS TO BE A REFERENCE 
+void MachineState::startState(uint8_t state, uint16_t* length) // FIXME:: LENGTH NEEDS TO BE A REFERENCE 
 {
-    
-    Serial.printf("\n /// Started State: %d, Length: %dD /// \n\n", state, *length);
-
     if (state == none | length == NULL){
+
+        Serial.printf("\nMachineState: Returning to none state \n\n");
         TempController::off();
         // LED
         ledcWrite(0, 0);
-    } else if (state == colonisation){
+        _state.mode = none;
+        _state.startT = 0;
+        _state.endT   = 0;
+
+        _saveState();
+        return;
+    }
+    
+    Serial.printf("\n /// Started State: %d, Length: %dHrs /// \n\n", state, *length);
+
+    
+
+    if (state == colonisation){
         TempController::setTemp(Settings::lerpSettings.c_temp);
         ledcWrite(0, 0);
     } else if (state == fruiting){
@@ -43,7 +54,7 @@ void MachineState::startState(uint8_t state, uint8_t* length) // FIXME:: LENGTH 
     _state.startT = RTCModule::getTime().unixtime();
 
     // TODO: why cant I add the unixtime
-    _state.endT   = _state.startT + *length*24*60*60;
+    _state.endT   = _state.startT + *length*60*60;
 
     _saveState();
 }
@@ -51,7 +62,12 @@ void MachineState::startState(uint8_t state, uint8_t* length) // FIXME:: LENGTH 
 float MachineState::getStateProgress(void)
 {
     uint32_t now = RTCModule::getTime().unixtime();
-    return  static_cast<float>(now - _state.startT) / static_cast<float>(_state.endT - _state.startT);
+    if (_state.endT != _state.startT) {
+        return  static_cast<float>(now - _state.startT) / static_cast<float>(_state.endT - _state.startT);
+    } else {
+        return 0;
+    }
+    
 }
 
 uint8_t MachineState::getState(void)
@@ -93,7 +109,6 @@ void MachineState::_saveState(void)
 StateController::StateController(void)
 {
 }
-
 
 // LOGIC FOR CHANGES OF STATE
 void StateController::update(void)

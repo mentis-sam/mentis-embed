@@ -8,7 +8,7 @@
 
 class InputScreen: public ImageScreen {
 public: 
-    InputScreen(const uint8_t* frame_data, const uint32_t* frame_len, uint8_t* var, const uint8_t range);
+    InputScreen(const uint8_t* frame_data, const uint32_t* frame_len, uint16_t* var, const uint8_t range);
 
     void load(void);
     void nextFrame(void);
@@ -18,7 +18,7 @@ public:
     void onRight(void);
 private:
     const uint8_t  _range;
-    uint8_t*       _var;
+    uint16_t*       _var;
 
     void _rotate(bool inc);
 };

@@ -8,26 +8,26 @@ enum beep_settings {on_harvest, on_drying, both};
 enum Mode          { none, colonisation , fruiting , dehydration };
 
 struct Settings_S{
-    uint8_t c_timeperiod;
-    uint8_t c_temp;
-    uint8_t c_airflow;
+    uint16_t c_timeperiod;
+    uint16_t c_temp;
+    uint16_t c_airflow;
 
-    uint8_t f_timeperiod;
-    uint8_t f_temp;
-    uint8_t f_airflow;
-    uint8_t f_light;
+    uint16_t f_timeperiod;
+    uint16_t f_temp;
+    uint16_t f_airflow;
+    uint16_t f_light;
 
-    uint8_t d_timeperiod;
-    uint8_t d_temp;
-    uint8_t d_airflow;
+    uint16_t d_timeperiod;
+    uint16_t d_temp;
+    uint16_t d_airflow;
 
-    uint8_t beep;
+    uint16_t beep;
 };
 
 struct Lerp {
-    int8_t s_range;
-    int8_t l_min;
-    int8_t l_max;
+    uint16_t s_range;
+    uint16_t l_min;
+    uint16_t l_max;
 };
 
 struct Settings_Lerp{
@@ -57,7 +57,7 @@ public:
 private:
     const static Settings_Lerp _settingsLerp;
     static void calcLerpSettings();
-    static void _lerp(uint8_t & setting, Lerp lerp);
+    static void _lerp(uint16_t & setting, Lerp lerp);
 };
 
 

@@ -22,7 +22,7 @@ public:
     MachineState();
 
     static uint8_t initialise(void);
-    static void    startState(uint8_t state, uint8_t* length = NULL);
+    static void    startState(uint8_t state, uint16_t* length = NULL);
     static float   getStateProgress(void);
     static uint8_t getState(void);
 private:
