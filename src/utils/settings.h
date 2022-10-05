@@ -19,7 +19,6 @@ struct Settings_S{
 
     uint16_t d_timeperiod;
     uint16_t d_temp;
-    uint16_t d_airflow;
 
     uint16_t beep;
 };

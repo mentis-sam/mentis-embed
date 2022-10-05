@@ -38,10 +38,17 @@
 
 #include "screen_files/settings_menu.h"
 
-#include "screen_files/settings_timeperiod.h"
-#include "screen_files/settings_temperature.h"
+#include "screen_files/settings_timeperiod_c.h"
+#include "screen_files/settings_timeperiod_d.h"
+#include "screen_files/settings_timeperiod_f.h"
+
+#include "screen_files/settings_temperature_cf.h"
+#include "screen_files/settings_temperature_d.h"
+
 #include "screen_files/settings_airflow.h"
 #include "screen_files/settings_light.h"
+
+#include "screen_files/ready.h"
 
 class NavScreen;
 class SettingsScreen;
@@ -64,12 +71,14 @@ extern NavScreen colonise_colonising;
 extern NavScreen colonise_inject;
 extern NavScreen colonise_insert;
 extern NavScreen colonise_wipe;
+extern NavScreen colonise_ready;
 extern CancelScreen colonise_cancel;
 
 extern NavScreen mycelium_close;
 extern NavScreen mycelium_fruiting;
 extern NavScreen mycelium_insert;
 extern NavScreen mycelium_complete;
+extern NavScreen mycelium_ready;
 extern CancelScreen mycelium_cancel;
 
 extern NavScreen help_inject_c;
@@ -96,6 +105,9 @@ extern InputScreen settings_f_time;
 extern InputScreen settings_f_temp;
 extern InputScreen settings_f_airflow;
 extern InputScreen settings_f_light;
+
+extern InputScreen settings_d_time;
+extern InputScreen settings_d_temp;
 
 void gotoScreen(Screen* screen, bool load = true); 
 void back(bool load = true);

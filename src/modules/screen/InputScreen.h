@@ -18,7 +18,7 @@ public:
     void onRight(void);
 private:
     const uint8_t  _range;
-    uint16_t*       _var;
+    uint16_t*      _var;
 
     void _rotate(bool inc);
 };
