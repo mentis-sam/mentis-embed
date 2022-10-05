@@ -1,22 +1,8 @@
-/*#ifndef MANROPE_H
+#ifndef MANROPE_H
 #define MANROPE_H
 
 #include <pgmspace.h>
 #include <stdint.h>
-
-typedef struct { // Data stored PER GLYPH
-	uint32_t bitmapOffset;     // Pointer into GFXfont->bitmap
-	uint8_t  width, height;    // Bitmap dimensions in pixels
-	uint8_t  xAdvance;         // Distance to advance cursor (x axis)
-	int8_t   xOffset, yOffset; // Dist from cursor pos to UL corner
-} GFXglyph;
-
-typedef struct { // Data stored for FONT AS A WHOLE:
-	uint8_t  *bitmap;      // Glyph bitmaps, concatenated
-	GFXglyph *glyph;       // Glyph array
-	uint16_t  first, last; // ASCII extents
-	uint8_t   yAdvance;    // Newline distance (y axis)
-} GFXfont;
 
 const uint8_t manrope_bitmaps[] PROGMEM = {
   0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xED, 0xB6, 0xC8, 0x0F, 0xF8, 0xE7, 0xE7,
@@ -410,4 +396,3 @@ const GFXfont manrope PROGMEM = {
 
 #endif
 
-*/

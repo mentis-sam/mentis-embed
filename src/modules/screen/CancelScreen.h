@@ -8,7 +8,7 @@
 
 class CancelScreen: public ImageScreen {
 public: 
-    CancelScreen(const uint8_t* frame_data, const uint32_t* frame_len, Screen* fromScreen, Screen* returnScreen);
+    CancelScreen(const uint8_t* frame_data, const uint32_t* frame_len, Screen* fromScreen, Screen* returnScreen, void (*loadCallback)());
 
     void nextFrame(void);
     
@@ -16,6 +16,7 @@ public:
     void onLeft(void);
     void onRight(void);
 private:
+    void      (*_cancelCallback)();
     Screen*   _fromScreen;
     Screen*   _returnScreen;
     bool      _state;

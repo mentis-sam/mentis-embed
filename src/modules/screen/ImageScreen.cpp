@@ -43,4 +43,6 @@ void ImageScreen::render(void)
         rc = png.decode(NULL, 0);
         png.close();
     };
+
+    tft.drawString("Hello", SCREEN_WIDTH/2, 30); 
 }

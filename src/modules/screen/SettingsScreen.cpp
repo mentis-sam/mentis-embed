@@ -142,7 +142,8 @@ void SettingsScreen::callFunc(int8_t id){
         
         break;
     case fr_1:
-        Settings::factory_reset();
+        Nav::gotoScreen(&Nav::settings_factory_rs);
+        _loaded = false;
         break;
     default:
         return;

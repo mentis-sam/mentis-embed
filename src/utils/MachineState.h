@@ -22,8 +22,8 @@ public:
     MachineState();
 
     static uint8_t initialise(void);
-    static void    startState(uint8_t state, uint16_t* length = NULL);
-    static float   getStateProgress(void);
+    static void    startState(uint8_t state, uint16_t* length = NULL, bool save = true);
+    static float   updateStateProgress(void);
     static uint8_t getState(void);
 private:
     static void _saveState(void);

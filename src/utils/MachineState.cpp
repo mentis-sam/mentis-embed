@@ -16,7 +16,8 @@ uint8_t MachineState::initialise(void)
     return 0;
 }
 
-void MachineState::startState(uint8_t state, uint16_t* length) // FIXME:: LENGTH NEEDS TO BE A REFERENCE 
+// TODO: quite hacky
+void MachineState::startState(uint8_t state, uint16_t* length, bool save) // FIXME:: LENGTH NEEDS TO BE A REFERENCE 
 {
     if (state == none | length == NULL){
 
@@ -24,11 +25,15 @@ void MachineState::startState(uint8_t state, uint16_t* length) // FIXME:: LENGTH
         TempController::off();
         // LED
         ledcWrite(0, 0);
-        _state.mode = none;
-        _state.startT = 0;
-        _state.endT   = 0;
+        
 
-        _saveState();
+        if (save) {
+            _state.mode = none;
+            _state.startT = 0;
+            _state.endT   = 0;
+            _saveState();
+        }
+        
         return;
     }
     
@@ -47,16 +52,20 @@ void MachineState::startState(uint8_t state, uint16_t* length) // FIXME:: LENGTH
         digitalWrite(LED_PIN, LOW);
     }
 
-    _state.mode = state;
-    _state.startT = RTCModule::getTime().unixtime();
+    if (save) {
+        _state.mode = state;
+        _state.startT = RTCModule::getTime().unixtime();
 
-    // TODO: why cant I add the unixtime
-    _state.endT   = _state.startT + *length*60*60;
+        // TODO: why cant I add the unixtime
+        _state.endT   = _state.startT + *length*60*60;
 
-    _saveState();
+        _saveState();
+    }
+
+    
 }
 
-float MachineState::getStateProgress(void)
+float MachineState::updateStateProgress(void)
 {
     uint32_t now = RTCModule::getTime().unixtime();
     if (_state.endT != _state.startT) {
@@ -79,26 +88,20 @@ void MachineState::_loadState(void)
     if (FileManager::exists("/state")){
         FileManager::read("/state", &_state, sizeof(_state));
 
-        State_Settings tmp = _state;
-
         // TODO: this would be nicer as a switch
         if (_state.mode == none) {
             Nav::gotoScreen(&Nav::menu_colonise);
-            MachineState::startState(none);
+            MachineState::startState(none, NULL, false);
         } else if (_state.mode == colonisation) {
             Nav::gotoScreen(&Nav::colonise_colonising);
-            MachineState::startState(colonisation, &Settings::lerpSettings.c_timeperiod);
+            MachineState::startState(colonisation, &Settings::lerpSettings.c_timeperiod, false);
         } else if (_state.mode == fruiting){
             Nav::gotoScreen(&Nav::mycelium_fruiting);
-            MachineState::startState(fruiting, &Settings::lerpSettings.f_timeperiod);
+            MachineState::startState(fruiting, &Settings::lerpSettings.f_timeperiod, false);
         } else if (_state.mode == dehydration) {
-            // FIXME: This needs to be the new dehydration screen
             Nav::gotoScreen(&Nav::dehydrate_dehydrating);
-            MachineState::startState(dehydration, &Settings::lerpSettings.d_timeperiod);      
-        }
-
-        // Re overwrites the state FIXME: fml
-        _state = tmp;
+            MachineState::startState(dehydration, &Settings::lerpSettings.d_timeperiod, false);      
+        }    
     }
 }
 
@@ -116,9 +119,9 @@ StateController::StateController(void)
 // LOGIC FOR CHANGES OF STATE
 void StateController::update(void)
 {
-    float progress = MachineState::getStateProgress();
+    float progress = MachineState::updateStateProgress();
 
-    Serial.printf("StateController: %d, Progress: %f\n", MachineState::getState(), MachineState::getStateProgress());
+    Serial.printf("StateController: %d, Progress: %f\n", MachineState::getState(), MachineState::updateStateProgress());
     
     if (progress < 1) {return;}
 

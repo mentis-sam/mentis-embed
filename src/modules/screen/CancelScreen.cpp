@@ -1,7 +1,7 @@
 #include "CancelScreen.h"
 
-CancelScreen::CancelScreen(const uint8_t* frame_data, const uint32_t* frame_len, Screen* fromScreen, Screen* returnScreen):
-ImageScreen(frame_data, frame_len), _state(false), _fromScreen(fromScreen), _returnScreen(returnScreen)
+CancelScreen::CancelScreen(const uint8_t* frame_data, const uint32_t* frame_len, Screen* fromScreen, Screen* returnScreen, void (*cancelCallback)()):
+ImageScreen(frame_data, frame_len), _state(false), _fromScreen(fromScreen), _returnScreen(returnScreen), _cancelCallback(cancelCallback)
 {
 }
 
@@ -31,7 +31,7 @@ void CancelScreen::onSelect(void)
         Nav::gotoScreen(_fromScreen);
         _loaded = false;
     }else{
-        MachineState::startState(none);
+        _cancelCallback();
         Nav::gotoScreen(_returnScreen);
         _loaded = false;
     }

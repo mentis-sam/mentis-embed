@@ -38,6 +38,8 @@
 
 #include "screen_files/settings_menu.h"
 
+#include "screen_files/settings_factory_rs.h"
+
 #include "screen_files/settings_timeperiod_c.h"
 #include "screen_files/settings_timeperiod_d.h"
 #include "screen_files/settings_timeperiod_f.h"
@@ -96,6 +98,8 @@ extern NavScreen help_insert_m;
 extern NavScreen help_lid_m;
 
 extern SettingsScreen settings_menu;
+
+extern CancelScreen settings_factory_rs;
 
 extern InputScreen settings_c_time;
 extern InputScreen settings_c_temp;

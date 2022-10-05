@@ -1,8 +1,8 @@
 #include "NavScreen.h"
 
 
-NavScreen::NavScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames, Screen* navLeft, Screen* navRight, Screen* navSelect, void (*loadCallback)()):
-ImageScreen(frame_data, frame_len), _frames(frames), _navLeft(navLeft), _navRight(navRight), _navSelect(navSelect), _loadCallback(loadCallback)
+NavScreen::NavScreen(const uint8_t* frame_data, const uint32_t* frame_len, const uint8_t frames, Screen* navLeft, Screen* navRight, Screen* navSelect, void (*loadCallback)(), void (*renderCallback)()):
+ImageScreen(frame_data, frame_len), _frames(frames), _navLeft(navLeft), _navRight(navRight), _navSelect(navSelect), _loadCallback(loadCallback), _renderCallback(renderCallback)
 {
 }
 
@@ -16,6 +16,11 @@ void NavScreen::load(void)
     _loaded = true;
     _loadCallback();
     render();
+}
+
+void NavScreen::render(void){
+    ImageScreen::render();
+    _renderCallback();
 }
 
 void NavScreen::nextFrame(void)

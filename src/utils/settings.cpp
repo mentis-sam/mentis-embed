@@ -76,5 +76,5 @@ void Settings::factory_reset(void){
 }
 
 void Settings::_lerp(uint16_t & setting, Lerp lerp){
-    setting = lerp.l_min + (lerp.l_max - lerp.l_min) * (static_cast<float>(setting - 1) / (lerp.s_range));
+    setting = lerp.l_min + (lerp.l_max - lerp.l_min) * (static_cast<float>(setting) / (lerp.s_range));
 }

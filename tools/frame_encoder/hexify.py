@@ -234,3 +234,8 @@ f = []
 f.extend([f'img/Settings/Time Period/Fruiting/Time Period {n}.png' for n in range(1,15)])
 
 create_header("settings_timeperiod_f_i", f)
+
+f = []
+f.extend([f'img/Settings/Factory Reset/Factory Reset {n}.png' for n in range(1,3)])
+
+create_header("settings_factory_rs_i", f)

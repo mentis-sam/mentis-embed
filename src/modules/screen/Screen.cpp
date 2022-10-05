@@ -12,6 +12,10 @@ uint8_t Screen::initialise(void)
     tft.init();
 	tft.setRotation(1);
 	tft.fillScreen(TFT_BLACK);
+
+    tft.setFreeFont(&manrope);
+    tft.setTextColor(TFT_WHITE);
+    tft.setTextDatum(TC_DATUM);
     
     Serial.println("ScreenModule: Initialised\n");
 
