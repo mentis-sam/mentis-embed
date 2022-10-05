@@ -50,10 +50,12 @@ public:
 
     static void loadSettings(void);
     static void saveSettings(void);
+    static void factory_reset(void);
 
     static Settings_S settings;
     static Settings_S lerpSettings;
 private:
+    const static Settings_S _f_settings;
     const static Settings_Lerp _settingsLerp;
     static void calcLerpSettings();
     static void _lerp(uint16_t & setting, Lerp lerp);

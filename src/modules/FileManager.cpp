@@ -29,14 +29,14 @@ void FileManager::read(const char* file, void *obj, uint8_t size)
 {
     Serial.printf("FileManager: Reading file ");
     Serial.println(file);
-    File myFile = SPIFFS.open(file, FILE_WRITE);
+    File myFile = SPIFFS.open(file, FILE_READ);
 
     if (!myFile) {
         Serial.println("FileManager: There was an error opening the file for reading");
         return;
     }
     
-    myFile.read((byte *)&obj, sizeof(obj));
+    myFile.readBytes((char*)obj, sizeof(obj));
     myFile.close();
 }
 
@@ -51,6 +51,6 @@ void FileManager::write(const char* file, void *obj, uint8_t size)
         return;
     }
 
-    myFile.write((uint8_t *)&obj, sizeof(obj));
+    myFile.write((byte*)obj, sizeof(obj));
     myFile.close();
 }

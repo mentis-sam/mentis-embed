@@ -12,7 +12,7 @@ uint8_t Screen::initialise(void)
     tft.init();
 	tft.setRotation(1);
 	tft.fillScreen(TFT_BLACK);
-
+    
     Serial.println("ScreenModule: Initialised\n");
 
     return 0;

@@ -19,6 +19,7 @@
 
 volatile int lastTime = 0;
 volatile int lastTime2 = 0;
+volatile int lastTime3 = 0;
 
 u_long lastIsrAt = 0;
 hw_timer_t * timer = NULL;
@@ -39,6 +40,8 @@ void setup(){
 		uint8_t errors = 0;
 		Serial.printf("/// INITIALISING MODULES ///\n\n");
 
+
+		// WARNING: THE ORDER OF THESE IS ANNOYINGLY IMPORTANT
 		errors += TempModule::initialise();
 		errors += RTCModule::initialise();
 		errors += EncoderModule::initialise();
@@ -47,18 +50,12 @@ void setup(){
 		errors += IO::initialise();
 		errors += FileManager::initialise();
 
-		errors += MachineState::initialise();
 		errors += TempController::initialise();
-
+		errors += MachineState::initialise();
 		
-
-		Nav::gotoScreen(&Nav::menu_colonise);
-		Nav::currentScreen->load();
 
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
 		Serial.printf("Module Errors: %d\n\n", errors);
-
-		//MachineState::startState(dehydration, &Settings::lerpSettings.d_timeperiod);
 }
 
 
@@ -85,22 +82,22 @@ void loop(){
 	}
 
 	// Render next frame of animation
-	if (millis() > lastTime + 100)
+	if (millis() > lastTime + 120)
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();
 	}
 
+	// 5s
 	if (millis() > lastTime2 + 5000)
 	{
 		lastTime2 = millis();
-
-		//TODO: Make these happen different rates
-
-		// 5 min
-		StateController::update();
-
-		// 5 sec
 		TempController::update();
+	}
+	// 5min
+	if (millis() > lastTime3 + 5000)
+	{
+		lastTime3 = millis();
+		StateController::update();
 	}
 }

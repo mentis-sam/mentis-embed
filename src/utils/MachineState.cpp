@@ -34,8 +34,6 @@ void MachineState::startState(uint8_t state, uint16_t* length) // FIXME:: LENGTH
     
     Serial.printf("\n /// Started State: %d, Length: %dHrs /// \n\n", state, *length);
 
-    
-
     if (state == colonisation){
         TempController::setTemp(Settings::lerpSettings.c_temp);
         ledcWrite(0, 0);
@@ -43,7 +41,6 @@ void MachineState::startState(uint8_t state, uint16_t* length) // FIXME:: LENGTH
         TempController::setTemp(Settings::lerpSettings.f_temp);
 
         uint8_t duty = round(16 * static_cast<float>(Settings::lerpSettings.f_light)/11);
-
         ledcWrite(0, duty);
     } else if (state == dehydration){
         TempController::setTemp(Settings::lerpSettings.d_temp);
@@ -82,9 +79,12 @@ void MachineState::_loadState(void)
     if (FileManager::exists("/state")){
         FileManager::read("/state", &_state, sizeof(_state));
 
+        State_Settings tmp = _state;
+
         // TODO: this would be nicer as a switch
         if (_state.mode == none) {
-            return;
+            Nav::gotoScreen(&Nav::menu_colonise);
+            MachineState::startState(none);
         } else if (_state.mode == colonisation) {
             Nav::gotoScreen(&Nav::colonise_colonising);
             MachineState::startState(colonisation, &Settings::lerpSettings.c_timeperiod);
@@ -93,9 +93,12 @@ void MachineState::_loadState(void)
             MachineState::startState(fruiting, &Settings::lerpSettings.f_timeperiod);
         } else if (_state.mode == dehydration) {
             // FIXME: This needs to be the new dehydration screen
-            Nav::gotoScreen(&Nav::menu_dehydrate);
+            Nav::gotoScreen(&Nav::dehydrate_dehydrating);
             MachineState::startState(dehydration, &Settings::lerpSettings.d_timeperiod);      
         }
+
+        // Re overwrites the state FIXME: fml
+        _state = tmp;
     }
 }
 
@@ -131,10 +134,10 @@ void StateController::update(void)
         Nav::gotoScreen(&Nav::mycelium_fruiting);
         MachineState::startState(fruiting, &Settings::lerpSettings.f_timeperiod);
     } else if (state == fruiting){
-        Nav::gotoScreen(&Nav::menu_mycelium);
-        MachineState::startState(none);
+        // Do notification
+
     } else if (state == dehydration) {
-        Nav::gotoScreen(&Nav::menu_dehydrate);
+        Nav::gotoScreen(&Nav::dehydrate_complete);
         MachineState::startState(none);      
     }
 }

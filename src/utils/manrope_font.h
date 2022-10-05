@@ -1,4 +1,24 @@
-const uint8_t FreeSans16pt7bBitmaps[] PROGMEM = {
+/*#ifndef MANROPE_H
+#define MANROPE_H
+
+#include <pgmspace.h>
+#include <stdint.h>
+
+typedef struct { // Data stored PER GLYPH
+	uint32_t bitmapOffset;     // Pointer into GFXfont->bitmap
+	uint8_t  width, height;    // Bitmap dimensions in pixels
+	uint8_t  xAdvance;         // Distance to advance cursor (x axis)
+	int8_t   xOffset, yOffset; // Dist from cursor pos to UL corner
+} GFXglyph;
+
+typedef struct { // Data stored for FONT AS A WHOLE:
+	uint8_t  *bitmap;      // Glyph bitmaps, concatenated
+	GFXglyph *glyph;       // Glyph array
+	uint16_t  first, last; // ASCII extents
+	uint8_t   yAdvance;    // Newline distance (y axis)
+} GFXfont;
+
+const uint8_t manrope_bitmaps[] PROGMEM = {
   0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xED, 0xB6, 0xC8, 0x0F, 0xF8, 0xE7, 0xE7,
   0xE7, 0xE7, 0xC6, 0xC6, 0xC6, 0x03, 0x86, 0x01, 0xC3, 0x00, 0xC3, 0x80,
   0x61, 0xC0, 0x30, 0xC0, 0x18, 0x60, 0xFF, 0xFE, 0x7F, 0xFF, 0x06, 0x1C,
@@ -284,7 +304,7 @@ const uint8_t FreeSans16pt7bBitmaps[] PROGMEM = {
   0x0E, 0x1C, 0x38, 0x70, 0xE3, 0xCF, 0x18, 0x00, 0x18, 0x01, 0xF8, 0x36,
   0xF0, 0xF0, 0xFF, 0xC0, 0xF8, 0x00, 0x80 };
 
-const GFXglyph FreeSans16pt7bGlyphs[] PROGMEM = {
+const GFXglyph manrope_glyph[] PROGMEM = {
   {     0,   1,   1,   9,    0,    0 },   // 0x20 ' '
   {     1,   3,  23,   9,    4,  -22 },   // 0x21 '!'
   {    10,   8,   7,  11,    2,  -21 },   // 0x22 '"'
@@ -381,9 +401,13 @@ const GFXglyph FreeSans16pt7bGlyphs[] PROGMEM = {
   {  3365,   7,  30,  10,    1,  -22 },   // 0x7D '}'
   {  3392,  14,   6,  18,    2,  -13 } }; // 0x7E '~'
 
-const GFXfont FreeSans16pt7b PROGMEM = {
-  (uint8_t  *)FreeSans16pt7bBitmaps,
-  (GFXglyph *)FreeSans16pt7bGlyphs,
+const GFXfont manrope PROGMEM = {
+  (uint8_t  *)manrope_bitmaps,
+  (GFXglyph *)manrope_glyph,
   0x20, 0x7E, 53 };
 
 // Approx. 4075 bytes
+
+#endif
+
+*/

@@ -40,15 +40,11 @@ void InputScreen::onSelect(void)
 void InputScreen::_rotate(bool inc)
 {
     if (inc) {
-        if (*_var == _range){
-            *_var = 0;
-        }else{
+        if (*_var != _range){
             *_var = *_var + 1; 
         }
     }else{
-        if (*_var == 0){
-            *_var = _range;
-        }else{
+        if (*_var != 0){
             *_var = *_var - 1; 
         }
     }

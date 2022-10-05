@@ -1,13 +1,14 @@
 #include "SettingsScreen.h"
 
-const int8_t nav_screens = 21;
+const int8_t nav_screens = 25;
 
 enum s {
-    s_1, s_2, s_3, s_4, s_5,
+    s_1, s_2, s_3, s_4, s_5, s_6,
     c_1, c_2, c_3, c_4,
     f_1, f_2, f_3, f_4, f_5,
     d_1, d_2, d_3,
-    b_1, b_2, b_3, b_4
+    b_1, b_2, b_3, b_4, b_5,
+    r_1, r_2
 };
 
 enum f {
@@ -23,15 +24,17 @@ enum f {
     fd_2 = -9,
     fb_1 = -10,
     fb_2 = -11,
-    fb_3 = -12
+    fb_3 = -12,
+    fb_4 = -13,
+    fr_1 = -14
 };
 
 // Negative numbers denote functions (pretty hacky)
 // deffo replace with an enum
 const int8_t nav_lookup[nav_screens*3] = {
-    s_5, s_1, s_2, s_3, s_4, c_4, c_1, c_2, c_3, f_5, f_1, f_2, f_3, f_4, d_3, d_1, d_2, b_4, b_1, b_2, b_3,             //Left
-    s_2, s_3, s_4, s_5, s_1, c_2, c_3, c_4, c_1, f_2, f_3, f_4, f_5, f_1, d_2, d_3, d_1, b_2, b_3, b_4, b_1,             //Right
-    c_1, f_1, d_1, b_1, f_bk, fc_1, fc_2, fc_3, s_1, ff_1, ff_2, ff_3, ff_4, s_2, fd_1, fd_2, s_3, fb_1, fb_2, fb_3, s_4 //Select
+    s_6, s_1, s_2, s_3, s_4, s_5, c_4, c_1, c_2, c_3, f_5, f_1, f_2, f_3, f_4, d_3, d_1, d_2, b_5, b_1, b_2, b_3, b_4, r_2, r_1,  //Left
+    s_2, s_3, s_4, s_5, s_6, s_1, c_2, c_3, c_4, c_1, f_2, f_3, f_4, f_5, f_1, d_2, d_3, d_1, b_2, b_3, b_4, b_5, b_1, r_2, r_1,   //Right
+    c_1, f_1, d_1, b_1, r_1, f_bk, fc_1, fc_2, fc_3, s_1, ff_1, ff_2, ff_3, ff_4, s_2, fd_1, fd_2, s_3, fb_1, fb_2, fb_3, fb_4, s_4, fr_1, s_5 //Select
 };
 
 SettingsScreen::SettingsScreen(const uint8_t* frame_data, const uint32_t* frame_len):
@@ -134,6 +137,12 @@ void SettingsScreen::callFunc(int8_t id){
         break;
     case fb_3:
             
+        break;
+    case fb_4:
+        
+        break;
+    case fr_1:
+        Settings::factory_reset();
         break;
     default:
         return;

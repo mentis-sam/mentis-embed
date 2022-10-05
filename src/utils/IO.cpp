@@ -10,6 +10,12 @@ uint8_t initialise(void){
     // LED
     pinMode(LED_PIN, OUTPUT);
 
+    // LED
+    pinMode(BUZZER_PIN, OUTPUT);
+
+    ledcAttachPin(BUZZER_PIN, 1);
+    ledcSetup(1, 5000, 4);
+
     ledcAttachPin(LED_PIN, 0);
     // 1000Hz & 16 bit of resolution
     ledcSetup(0, 1000, 4);

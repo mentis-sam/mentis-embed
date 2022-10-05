@@ -84,11 +84,12 @@ def complete_single(name, folder, filename):
 
 #This is marginally better to read
 f = []
-f.extend([f'img/Settings/Menu/Settings {n}.png' for n in range(1,6)])
+f.extend([f'img/Settings/Menu/Settings {n}.png' for n in range(1,7)])
 f.extend([f'img/Settings/Menu/Colonisation {n}.png' for n in range(1,5)])
 f.extend([f'img/Settings/Menu/Fruiting {n}.png' for n in range(1,6)])
 f.extend([f'img/Settings/Menu/Dehydration {n}.png' for n in range(1,4)])
-f.extend([f'img/Settings/Menu/Beep {n}.png' for n in range(1,5)])
+f.extend([f'img/Settings/Menu/Beep {n}.png' for n in range(1,6)])
+f.extend([f'img/Settings/Menu/Reset {n}.png' for n in range(1,3)])
 
 create_header("settings_menu_i", f)
 

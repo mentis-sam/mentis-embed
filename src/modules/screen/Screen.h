@@ -6,6 +6,8 @@
 
 #include <TFT_eSPI.h>
 
+#include "utils/manrope_font.h"
+
 //extern TFT_eSPI tft;
 
 // TODO: REMOVE NEED TO SET _loaded = false on screen change
