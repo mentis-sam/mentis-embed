@@ -6,6 +6,8 @@ State_Settings MachineState::_state = {
     .endT = 0
 };
 
+float MachineState::_timeLeft = 0;
+
 MachineState::MachineState(void)
 {
 }
@@ -62,23 +64,34 @@ void MachineState::startState(uint8_t state, uint16_t* length, bool save) // FIX
         _saveState();
     }
 
+    updateStateProgress();
+
     
 }
 
 float MachineState::updateStateProgress(void)
 {
-    uint32_t now = RTCModule::getTime().unixtime();
+    uint32_t now      = RTCModule::getTime().unixtime();
+
+    // this casts to float with no check FIXME:
+    _timeLeft = _state.endT - now;
+
     if (_state.endT != _state.startT) {
         return  static_cast<float>(now - _state.startT) / static_cast<float>(_state.endT - _state.startT);
     } else {
         return 0;
     }
-    
 }
 
 uint8_t MachineState::getState(void)
 {
     return _state.mode;
+}
+
+// Returns time left in hrs
+uint32_t MachineState::getTimeLeft(void)
+{
+     return std::ceil(_timeLeft / (60*60));
 }
 
 void MachineState::_loadState(void)

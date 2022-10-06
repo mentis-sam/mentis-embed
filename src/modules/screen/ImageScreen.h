@@ -17,13 +17,19 @@ public:
     virtual void onSelect(void)  = 0;
     virtual void onLeft(void)    = 0;
     virtual void onRight(void)   = 0;
+
+    // This stops flickering pretty hacky too!!
+    static bool _skipRows;
 protected:
     const uint8_t*  _frame_d;
     const uint32_t* _frame_l;
 
     uint8_t _frame;
+
+    
 private:
-    static  void _pngDraw(PNGDRAW *pDraw);
+    static void _pngDraw(PNGDRAW *pDraw);
+    
 };
 
 #endif /* IMAGE_SCREEN */

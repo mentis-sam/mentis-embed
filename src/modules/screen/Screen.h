@@ -27,6 +27,7 @@ public:
     
 protected:
     bool _loaded;
+public:
     static TFT_eSPI tft;
 };
 

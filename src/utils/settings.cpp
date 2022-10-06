@@ -23,16 +23,16 @@ Settings_S Settings::settings = Settings::_f_settings;
 Settings_S Settings::lerpSettings = Settings::settings;
 
 const Settings_Lerp Settings::_settingsLerp = {
-    .c_timeperiod = { .s_range = 9, .l_min = 84, .l_max = 672},
+    .c_timeperiod = { .s_range = 9, .l_min = 84, .l_max = 840},
     .c_temp = { .s_range = 11, .l_min = 20, .l_max = 31},
-    .c_airflow = { .s_range = 50, .l_min = 1, .l_max = 10},
+    .c_airflow = { .s_range = 10, .l_min = 1, .l_max = 11},
 
-    .f_timeperiod = {.s_range = 14, .l_min = 24, .l_max = 336},
+    .f_timeperiod = {.s_range = 14, .l_min = 24, .l_max = 360},
     .f_temp = { .s_range = 11, .l_min = 20, .l_max = 31},
-    .f_airflow = { .s_range = 9, .l_min = 1, .l_max = 10},
-    .f_light = { .s_range = 10, .l_min = 1, .l_max = 16},
+    .f_airflow = { .s_range = 10, .l_min = 1, .l_max = 11},
+    .f_light = { .s_range = 10, .l_min = 7, .l_max = 17},
 
-    .d_timeperiod = { .s_range = 5, .l_min = 6, .l_max = 32},
+    .d_timeperiod = { .s_range = 5, .l_min = 6, .l_max = 36},
     .d_temp = { .s_range = 11, .l_min = 30, .l_max = 51},
 };
 
@@ -76,5 +76,5 @@ void Settings::factory_reset(void){
 }
 
 void Settings::_lerp(uint16_t & setting, Lerp lerp){
-    setting = lerp.l_min + (lerp.l_max - lerp.l_min) * (static_cast<float>(setting) / (lerp.s_range));
+    setting = lerp.l_min + (lerp.l_max - lerp.l_min) * (static_cast<float>(setting - 1) / (lerp.s_range - 1));
 }

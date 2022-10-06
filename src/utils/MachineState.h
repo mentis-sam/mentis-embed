@@ -21,14 +21,16 @@ class MachineState{
 public:
     MachineState();
 
-    static uint8_t initialise(void);
-    static void    startState(uint8_t state, uint16_t* length = NULL, bool save = true);
-    static float   updateStateProgress(void);
-    static uint8_t getState(void);
+    static uint8_t   initialise(void);
+    static void      startState(uint8_t state, uint16_t* length = NULL, bool save = true);
+    static float     updateStateProgress(void);
+    static uint8_t   getState(void);
+    static uint32_t getTimeLeft(void);
 private:
     static void _saveState(void);
     static void _loadState(void);
 
+    static float       _timeLeft;
     static State_Settings _state;
 };
 

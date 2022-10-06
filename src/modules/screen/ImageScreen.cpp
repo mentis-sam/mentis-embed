@@ -2,6 +2,8 @@
 
 PNG png; // PNG decoder inatance
 
+bool ImageScreen::_skipRows = false;
+
 ImageScreen::ImageScreen(const uint8_t* frame_data, const uint32_t* frame_len):
 Screen(), _frame_d(frame_data), _frame_l(frame_len)
 {
@@ -9,9 +11,15 @@ Screen(), _frame_d(frame_data), _frame_l(frame_len)
 
 // TODO: Render screen in one - might be faster
 void ImageScreen::_pngDraw(PNGDRAW *pDraw) {
-  uint16_t lineBuffer[SCREEN_WIDTH];
-  png.getLineAsRGB565(pDraw, lineBuffer, PNG_RGB565_BIG_ENDIAN, -1);
-  Screen::tft.pushImage(0, pDraw->y, pDraw->iWidth, 1, lineBuffer);
+    if (_skipRows) {
+        if (pDraw->y >= 0 & pDraw->y < 60){
+            return;
+        }
+    }
+
+    uint16_t lineBuffer[SCREEN_WIDTH];
+    png.getLineAsRGB565(pDraw, lineBuffer, PNG_RGB565_BIG_ENDIAN, -1);
+    Screen::tft.pushImage(0, pDraw->y, pDraw->iWidth, 1, lineBuffer);
 }
 
 // Can only be called once 
@@ -20,8 +28,10 @@ void ImageScreen::load(void)
     if (_loaded){
         return;
     }
+
     _frame = 0;
-    _loaded = true;
+    _skipRows = false;
+    _loaded   = true;
     render();
 }
 
@@ -43,6 +53,4 @@ void ImageScreen::render(void)
         rc = png.decode(NULL, 0);
         png.close();
     };
-
-    tft.drawString("Hello", SCREEN_WIDTH/2, 30); 
 }
