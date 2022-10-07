@@ -7,18 +7,72 @@ namespace Nav {
 Screen* currentScreen = NULL;
 Screen* lastScreen    = NULL;
 
+uint32_t lastTimeLeft = 0;
 void daysRemaining(void) {
-    ImageScreen::_skipRows = true; 
+    uint32_t timeLeft =  ((MachineState::getTimeLeft() + 24)/24);
+
+    ImageScreen::_skipRows = true;
     char str[255]; 
-    sprintf(str, "%d Days Remaining", ((MachineState::getTimeLeft() + 24)/24));
+    sprintf(str, "%d days remaining", ((MachineState::getTimeLeft() + 24)/24));
     Screen::tft.drawString(str, SCREEN_WIDTH/2 + 8, 40);
+
+    if (timeLeft != lastTimeLeft) {
+        ImageScreen::_skipRows = false;
+    }
+
+    lastTimeLeft = timeLeft;
+    /*
+    uint32_t timeLeft = ((MachineState::getTimeLeft() + 24)/24);
+
+    // Redraw whole screen
+    if (lastTimeLeft != timeLeft){
+        ImageScreen::_skipRows = false; 
+        return;
+    }
+
+    //Wait one frame then draw text & stop redrawing top half of screen
+    if ((lastTimeLeft != timeLeft) && ImageScreen::_skipRows == false){
+        char str[255]; 
+        sprintf(str, "%d days remaining", ((MachineState::getTimeLeft() + 24)/24));
+        Screen::tft.drawString(str, SCREEN_WIDTH/2 + 8, 40);
+        ImageScreen::_skipRows = true; 
+        lastTimeLeft = timeLeft;
+    }
+    */
 };
 
 void hoursRemaining(void) {
+    uint32_t timeLeft =  MachineState::getTimeLeft();
+
     ImageScreen::_skipRows = true; 
-    char str[255] ; 
-    sprintf(str, "%d Hours Remaining", MachineState::getTimeLeft());
+    char str[255]; 
+    sprintf(str, "%d hours remaining", MachineState::getTimeLeft());
     Screen::tft.drawString(str, SCREEN_WIDTH/2 + 8, 40);
+
+    if (timeLeft != lastTimeLeft) {
+        ImageScreen::_skipRows = false;
+    }
+
+    lastTimeLeft = timeLeft;
+
+    /*
+    uint32_t timeLeft =  MachineState::getTimeLeft();
+
+    // Redraw whole screen
+    if (lastTimeLeft != timeLeft){
+        ImageScreen::_skipRows = false; 
+        return;
+    }
+
+    //Wait one frame then draw text & stop redrawing top half of screen
+    if ((lastTimeLeft != timeLeft) && ImageScreen::_skipRows == false){
+        char str[255]; 
+        sprintf(str, "%d hours remaining", MachineState::getTimeLeft());
+        Screen::tft.drawString(str, SCREEN_WIDTH/2 + 8, 40);
+        ImageScreen::_skipRows = true; 
+        lastTimeLeft = timeLeft;
+    }
+    */
 };
 
 // How not to implement a menu system lol
@@ -75,9 +129,11 @@ void gotoScreen(Screen* screen, bool load){
     if (screen == NULL) {
         return;
     }
+    if (currentScreen != NULL){
+        currentScreen->unload();
+    }
     
     currentScreen = screen;
-
     if (load) { currentScreen->load(); }
 }
 

@@ -15,10 +15,12 @@ uint8_t TempController::initialise()
     return 0;
 }
 
-void TempController::setTemp(uint8_t temp)
+void TempController::setTemp(uint8_t temp, uint8_t speed)
 {
     Serial.printf("TempController: Temp Controller on, set to %d\n", temp);
     digitalWrite(FAN_PIN, HIGH);
+    // Sounds terrible
+    //ledcWrite(2, speed);
     _on = true;
     _temp = temp;
 }
@@ -26,7 +28,9 @@ void TempController::setTemp(uint8_t temp)
 void TempController::off()
 {
     Serial.println("TempController: Temp Controller off");
-    digitalWrite(FAN_PIN, LOW); digitalWrite(HEATER_PIN, LOW);
+    digitalWrite(FAN_PIN, LOW); 
+    //ledcWrite(2, 0);
+    digitalWrite(HEATER_PIN, LOW);
     _heaterPin = false;
     _on = false;
 }
@@ -38,11 +42,13 @@ void TempController::update(void)
 
     // ON
     float temp = TempModule::getTempC();
+    
 
     Serial.printf("TempModule: Current temp: %fC, Heater: %d\n", temp, _heaterPin);
 
     // TODO: ADD BETTER CONTROLLER NOT JUST HYST
     if (_heaterPin & (temp > _temp + (hyst / 2))){
+        
         digitalWrite(HEATER_PIN, LOW);
         _heaterPin = false;
     }

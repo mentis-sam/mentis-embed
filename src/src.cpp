@@ -95,7 +95,7 @@ void loop(){
 		TempController::update();
 	}
 	// 5min
-	if (millis() > lastTime3 + 60*5000)
+	if (millis() > lastTime3 + 5000)
 	{
 		lastTime3 = millis();
 		StateController::update();

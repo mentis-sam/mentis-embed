@@ -11,6 +11,7 @@ public:
     void load(void);
     void nextFrame(void);
     
+    void render(void);
     void onSelect(void);
     void onLeft(void);
     void onRight(void);

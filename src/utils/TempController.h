@@ -10,7 +10,7 @@ public:
 
     static uint8_t initialise();
 
-    static void setTemp(uint8_t temp);
+    static void setTemp(uint8_t temp, uint8_t speed);
     static void off();
 
     static void update(void);

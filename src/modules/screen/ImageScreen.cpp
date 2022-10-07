@@ -28,11 +28,16 @@ void ImageScreen::load(void)
     if (_loaded){
         return;
     }
-
     _frame = 0;
     _skipRows = false;
     _loaded   = true;
     render();
+}
+
+// Can only be called once 
+void ImageScreen::unload(void)
+{
+    _loaded   = false;
 }
 
 void ImageScreen::render(void)

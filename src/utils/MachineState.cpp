@@ -35,22 +35,21 @@ void MachineState::startState(uint8_t state, uint16_t* length, bool save) // FIX
             _state.endT   = 0;
             _saveState();
         }
-        
         return;
     }
     
     Serial.printf("\n /// Started State: %d, Length: %dHrs /// \n\n", state, *length);
 
     if (state == colonisation){
-        TempController::setTemp(Settings::lerpSettings.c_temp);
+        TempController::setTemp(Settings::lerpSettings.c_temp, Settings::lerpSettings.c_airflow);
         ledcWrite(0, 0);
     } else if (state == fruiting){
-        TempController::setTemp(Settings::lerpSettings.f_temp);
+        TempController::setTemp(Settings::lerpSettings.f_temp, Settings::lerpSettings.f_airflow);
 
-        uint8_t duty = round(16 * static_cast<float>(Settings::lerpSettings.f_light)/11);
-        ledcWrite(0, duty);
+        //uint8_t duty = round(Settings::lerpSettings.f_light);
+        ledcWrite(0, Settings::lerpSettings.f_light);
     } else if (state == dehydration){
-        TempController::setTemp(Settings::lerpSettings.d_temp);
+        TempController::setTemp(Settings::lerpSettings.d_temp, 15);
         digitalWrite(LED_PIN, LOW);
     }
 
@@ -65,8 +64,6 @@ void MachineState::startState(uint8_t state, uint16_t* length, bool save) // FIX
     }
 
     updateStateProgress();
-
-    
 }
 
 float MachineState::updateStateProgress(void)
@@ -115,6 +112,8 @@ void MachineState::_loadState(void)
             Nav::gotoScreen(&Nav::dehydrate_dehydrating);
             MachineState::startState(dehydration, &Settings::lerpSettings.d_timeperiod, false);      
         }    
+    }else{
+        _saveState();
     }
 }
 
@@ -151,7 +150,6 @@ void StateController::update(void)
         MachineState::startState(fruiting, &Settings::lerpSettings.f_timeperiod);
     } else if (state == fruiting){
         // Do notification
-
     } else if (state == dehydration) {
         Nav::gotoScreen(&Nav::dehydrate_complete);
         MachineState::startState(none);      

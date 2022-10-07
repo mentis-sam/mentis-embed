@@ -1,6 +1,5 @@
 #include "settings.h"
 
-
 // FIXME: Works but should probs refactor this whole thing
 const Settings_S Settings::_f_settings = {
     .c_timeperiod = 5,
@@ -15,7 +14,7 @@ const Settings_S Settings::_f_settings = {
     .d_timeperiod = 2,
     .d_temp = 10,
 
-    .beep = 0
+    .beep = 2
 };
 
 Settings_S Settings::settings = Settings::_f_settings;
@@ -30,7 +29,7 @@ const Settings_Lerp Settings::_settingsLerp = {
     .f_timeperiod = {.s_range = 14, .l_min = 24, .l_max = 360},
     .f_temp = { .s_range = 11, .l_min = 20, .l_max = 31},
     .f_airflow = { .s_range = 10, .l_min = 1, .l_max = 11},
-    .f_light = { .s_range = 10, .l_min = 7, .l_max = 17},
+    .f_light = { .s_range = 10, .l_min = 3, .l_max = 17},
 
     .d_timeperiod = { .s_range = 5, .l_min = 6, .l_max = 36},
     .d_temp = { .s_range = 11, .l_min = 30, .l_max = 51},
@@ -76,5 +75,5 @@ void Settings::factory_reset(void){
 }
 
 void Settings::_lerp(uint16_t & setting, Lerp lerp){
-    setting = lerp.l_min + (lerp.l_max - lerp.l_min) * (static_cast<float>(setting - 1) / (lerp.s_range - 1));
+    setting = lerp.l_min + (lerp.l_max - lerp.l_min) * (static_cast<float>(setting) / (lerp.s_range - 1));
 }

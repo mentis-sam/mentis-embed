@@ -19,6 +19,8 @@ public:
     static  uint8_t initialise(void);
 
     virtual void load(void) = 0;
+    virtual void unload(void) = 0;
+
     virtual void render(void) = 0;
     virtual void nextFrame(void) = 0;
     virtual void onSelect(void) = 0;

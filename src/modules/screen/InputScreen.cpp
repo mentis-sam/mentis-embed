@@ -34,7 +34,6 @@ void InputScreen::onRight(void)
 void InputScreen::onSelect(void)
 {
     Nav::gotoScreen(&Nav::settings_menu);
-    _loaded = false;
 }
 
 void InputScreen::_rotate(bool inc)

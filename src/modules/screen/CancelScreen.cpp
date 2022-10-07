@@ -29,11 +29,9 @@ void CancelScreen::onSelect(void)
 {
     if (_frame == 0){
         Nav::gotoScreen(_fromScreen);
-        _loaded = false;
     }else{
         _cancelCallback();
         Nav::gotoScreen(_returnScreen);
-        _loaded = false;
     }
     
 }

@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "modules/FileManager.h"
 
-enum beep_settings {on_harvest, on_drying, both};
+enum beep_settings { on_harvest, on_drying, both, never  };
 enum Mode          { none, colonisation , fruiting , dehydration };
 
 struct Settings_S{

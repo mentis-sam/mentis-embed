@@ -12,6 +12,7 @@ public:
     ImageScreen(const uint8_t* frame_data, const uint32_t* frame_len);
 
     void load(void);
+    void unload(void);
     void render(void);
     virtual void nextFrame(void) = 0;
     virtual void onSelect(void)  = 0;

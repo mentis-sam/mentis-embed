@@ -54,6 +54,30 @@ void SettingsScreen::nextFrame(void)
 {
 }
 
+void SettingsScreen::render(void)
+{
+    ImageScreen::render();
+    if (_frame == s_4 || _frame == b_1 || _frame == b_2 || _frame == b_3 || _frame == b_4 || _frame == b_5){
+        uint8_t ypos = 34; 
+
+        switch(Settings::settings.beep){
+            case on_harvest:
+                ypos = 34;
+                break;
+            case on_drying:
+                ypos = 66;
+                break;
+            case both:
+                ypos = 90;
+                break;
+            case never:
+                ypos = 114;
+                break;
+        };
+        tft.fillCircle(305, ypos, 3, TFT_DARKGREY);
+    }
+}
+
 void SettingsScreen::onLeft(void)
 {
     if (nav_lookup[_frame] < 0){
@@ -91,59 +115,52 @@ void SettingsScreen::callFunc(int8_t id){
         Nav::gotoScreen(&Nav::menu_settings);
         Settings::saveSettings();
         _frame = 0;
-        _loaded = false;
         break;
     case fc_1:
         Nav::gotoScreen(&Nav::settings_c_time);
-        _loaded = false;
         break;
     case fc_2:
         Nav::gotoScreen(&Nav::settings_c_temp);
-        _loaded = false;
         break;
     case fc_3:
         Nav::gotoScreen(&Nav::settings_c_airflow);
-        _loaded = false;
         break;
     case ff_1:
         Nav::gotoScreen(&Nav::settings_f_time);
-        _loaded = false;
         break;
     case ff_2:
         Nav::gotoScreen(&Nav::settings_f_temp);
-        _loaded = false;
         break;
     case ff_3:
         Nav::gotoScreen(&Nav::settings_f_airflow);
-        _loaded = false;
         break;
     case ff_4:
         Nav::gotoScreen(&Nav::settings_f_light);
-        _loaded = false;
         break;
     case fd_1:
         Nav::gotoScreen(&Nav::settings_d_time);
-        _loaded = false;
         break;
     case fd_2:
         Nav::gotoScreen(&Nav::settings_d_temp);
-        _loaded = false;
         break;
     case fb_1:
-            
+        Settings::settings.beep = on_harvest;
+        render();
         break;
     case fb_2:
-            
+        Settings::settings.beep = on_drying;
+        render();
         break;
     case fb_3:
-            
+        Settings::settings.beep = both;
+        render();
         break;
     case fb_4:
-        
+        Settings::settings.beep = never;
+        render();
         break;
     case fr_1:
         Nav::gotoScreen(&Nav::settings_factory_rs);
-        _loaded = false;
         break;
     default:
         return;

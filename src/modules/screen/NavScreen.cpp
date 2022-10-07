@@ -35,17 +35,14 @@ void NavScreen::nextFrame(void)
 void NavScreen::onLeft(void)
 {
     Nav::gotoScreen(_navLeft, false);
-    _loaded = false;
 }
 
 void NavScreen::onRight(void)
 {
     Nav::gotoScreen(_navRight, false);
-    _loaded = false;
 }
 
 void NavScreen::onSelect(void)
 {
     Nav::gotoScreen(_navSelect, false);
-    _loaded = false;
 }
