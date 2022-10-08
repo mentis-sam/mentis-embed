@@ -1,15 +1,22 @@
 #ifndef NOTIFY_H
 #define NOTIFY_H
 
+#include "IO.h"
 class Notify{
 public:
     Notify();
 
-    void set_notification(void);
+    static void set_notification(void);
 
-    void update(void);
+    static void update(void);
+
+    static void clear_notification(void);
+    static bool sleep;
 private:
-    bool _notify;
+    static int  _screenTime;
+    static bool _screenOn;
+    static bool _notify;
+
 };
 
 #endif

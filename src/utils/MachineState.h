@@ -25,7 +25,7 @@ public:
     static void      startState(uint8_t state, uint16_t* length = NULL, bool save = true);
     static float     updateStateProgress(void);
     static uint8_t   getState(void);
-    static uint32_t getTimeLeft(void);
+    static uint32_t  getTimeLeft(void);
 private:
     static void _saveState(void);
     static void _loadState(void);

@@ -12,6 +12,7 @@
 #include "utils/MachineState.h"
 #include "utils/TempController.h"
 #include "utils/IO.h"
+#include "utils/Notify.h"
 
 #include "modules/TempModule.h"
 #include "modules/RTCModule.h"
@@ -20,6 +21,8 @@
 volatile int lastTime = 0;
 volatile int lastTime2 = 0;
 volatile int lastTime3 = 0;
+
+volatile int lastInput = 0;
 
 u_long lastIsrAt = 0;
 hw_timer_t * timer = NULL;
@@ -56,6 +59,7 @@ void setup(){
 
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
 		Serial.printf("Module Errors: %d\n\n", errors);
+		lastInput = millis();
 }
 
 
@@ -63,17 +67,32 @@ void setup(){
 void loop(){
 	//EncoderModule::_rotaryEncorderISR();
 
+	//Screen sleeping
+	if (millis() > lastInput + 60*5000)
+	{
+		Notify::sleep = true;
+	}else{
+		Notify::sleep = false;
+	}
+
 	// TODO: This could be neater & more responsive with callbacks binding in setup
 	if (EncoderModule::selectFlag())
 	{
-		Nav::currentScreen->onSelect();
+		lastInput = millis();
+		if (Notify::sleep == false){Nav::currentScreen->onSelect();}
+		Notify::clear_notification();
 	}
 	if (EncoderModule::leftFlag())
 	{
-		Nav::currentScreen->onLeft();
+		lastInput = millis();
+		if (Notify::sleep == false){Nav::currentScreen->onLeft();}
+		Notify::clear_notification();
 	}
-	if (EncoderModule::rightFlag()){
-		Nav::currentScreen->onRight();
+	if (EncoderModule::rightFlag())
+	{
+		lastInput = millis();
+		if (Notify::sleep == false){Nav::currentScreen->onRight();}
+		Notify::clear_notification();
 	}
 
 	// Only load the screen if all navigation is complete
@@ -86,6 +105,7 @@ void loop(){
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();
+		Notify::update();
 	}
 
 	// 5s
@@ -95,7 +115,7 @@ void loop(){
 		TempController::update();
 	}
 	// 5min
-	if (millis() > lastTime3 + 5000)
+	if (millis() > lastTime3 + 60*5000)
 	{
 		lastTime3 = millis();
 		StateController::update();

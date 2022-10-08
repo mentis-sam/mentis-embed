@@ -68,7 +68,7 @@ void MachineState::startState(uint8_t state, uint16_t* length, bool save) // FIX
 
 float MachineState::updateStateProgress(void)
 {
-    uint32_t now      = RTCModule::getTime().unixtime();
+    uint32_t now = RTCModule::getTime().unixtime();
 
     // this casts to float with no check FIXME:
     _timeLeft = _state.endT - now;

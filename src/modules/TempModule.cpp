@@ -35,6 +35,7 @@ float TempModule::getTempC(void)
     if (selected) {
         return _ds.getTempC();
     }else{
-        return -273.0; // TempModule didn't init correctly return nonsense val
+        // Return high value so that it doesnt turn heater on
+        return 1000; // TempModule didn't init correctly return nonsense val
     }
 }

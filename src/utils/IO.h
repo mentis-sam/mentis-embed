@@ -7,6 +7,8 @@
 
 #define BUZZER_PIN 33
 
+#define BL_PIN 2
+
 #include <stdint.h>
 #include <Arduino.h>
 
