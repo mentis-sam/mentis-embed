@@ -11,9 +11,14 @@ uint32_t lastTimeLeft = 0;
 void daysRemaining(void) {
     uint32_t timeLeft =  ((MachineState::getTimeLeft() + 24)/24);
 
+    //Catch buffer overflow??
+    if (timeLeft > 5000){
+        timeLeft = 0;
+    }
+
     ImageScreen::_skipRows = true;
     char str[255]; 
-    sprintf(str, "%d days remaining", ((MachineState::getTimeLeft() + 24)/24));
+    sprintf(str, "%d days remaining", timeLeft);
     Screen::tft.drawString(str, SCREEN_WIDTH/2 + 8, 40);
 
     if (timeLeft != lastTimeLeft) {
@@ -44,9 +49,13 @@ void daysRemaining(void) {
 void hoursRemaining(void) {
     uint32_t timeLeft =  MachineState::getTimeLeft();
 
+    if (timeLeft > 5000){
+        timeLeft = 0;
+    }
+
     ImageScreen::_skipRows = true; 
     char str[255]; 
-    sprintf(str, "%d hours remaining", MachineState::getTimeLeft());
+    sprintf(str, "%d hours remaining", timeLeft);
     Screen::tft.drawString(str, SCREEN_WIDTH/2 + 8, 40);
 
     if (timeLeft != lastTimeLeft) {

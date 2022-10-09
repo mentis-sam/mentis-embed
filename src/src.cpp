@@ -55,6 +55,8 @@ void setup(){
 
 		errors += TempController::initialise();
 		errors += MachineState::initialise();
+
+		digitalWrite(BL_PIN, HIGH);
 		
 
 		Serial.printf("/// FINISHED INITIALISING MODULES ///\n");
@@ -67,8 +69,8 @@ void setup(){
 void loop(){
 	//EncoderModule::_rotaryEncorderISR();
 
-	//Screen sleeping
-	if (millis() > lastInput + 60*5000)
+	//Screen sleeping after 3 min
+	if (millis() > lastInput + 60*3000)
 	{
 		Notify::sleep = true;
 	}else{
@@ -101,7 +103,7 @@ void loop(){
 	}
 
 	// Render next frame of animation
-	if (millis() > lastTime + 100)
+	if (millis() > lastTime + 120)
 	{
 		lastTime = millis();
 		Nav::currentScreen->nextFrame();

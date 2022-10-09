@@ -13,6 +13,8 @@ public:
     static void clear_notification(void);
     static bool sleep;
 private:
+    static bool _lastNotify;
+    static bool _lastSleep;
     static int  _screenTime;
     static bool _screenOn;
     static bool _notify;

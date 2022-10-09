@@ -7,6 +7,8 @@
 #include "utils/NavManager.h"
 #include "utils/TempController.h"
 
+#include "utils/Notify.h"
+
 #include "IO.h"
 
 

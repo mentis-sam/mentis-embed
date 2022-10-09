@@ -74,7 +74,13 @@ float MachineState::updateStateProgress(void)
     _timeLeft = _state.endT - now;
 
     if (_state.endT != _state.startT) {
-        return  static_cast<float>(now - _state.startT) / static_cast<float>(_state.endT - _state.startT);
+        float f = static_cast<float>(now - _state.startT) / static_cast<float>(_state.endT - _state.startT);
+
+        if (f < 1){
+            return f;
+        }else{
+            return 1;
+        }
     } else {
         return 0;
     }
@@ -150,8 +156,10 @@ void StateController::update(void)
         MachineState::startState(fruiting, &Settings::lerpSettings.f_timeperiod);
     } else if (state == fruiting){
         // Do notification
+        Notify::set_notification();
     } else if (state == dehydration) {
         Nav::gotoScreen(&Nav::dehydrate_complete);
-        MachineState::startState(none);      
+        MachineState::startState(none);     
+        Notify::set_notification(); 
     }
 }
