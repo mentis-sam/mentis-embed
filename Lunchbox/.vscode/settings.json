@@ -26,5 +26,6 @@
         "initializer_list": "cpp",
         "numeric": "cpp",
         "limits": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
